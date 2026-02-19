@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Léčba Bolestí Zad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-logo">Dr. Terapie</div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-section="hero">Domů</button>
+      <button class="nav-btn" data-section="sluzby">Služby</button>
+      <button class="nav-btn" data-section="gallery">Fotogalerie</button>
+      <button class="nav-btn" data-section="reviews">Recenze</button>
+      <button class="nav-btn" data-section="contact">Kontakt</button>
+    </div>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <section id="hero" class="section active">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Bezoperační léčba</p>
+      <h1 class="hero-title">Léčba<br><span>Bolestí Zad</span></h1>
+      <p class="hero-sub">Rychlé výsledky bez léků a fyzického namáhání</p>
+      <div class="hero-btns">
+        <button class="btn-primary pulse" onclick="window.location.href='tel:+420123456789'">📞 Zavolat</button>
+        <button class="btn-secondary" data-section="sluzby">Naše služby</button>
+      </div>
+      <div class="hero-badge">Vyšetření & konzultace <strong>ZDARMA</strong></div>
+    </div>
+    <div class="hero-scroll"><span></span></div>
+  </section>
+
+  <section id="sluzby" class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Co léčíme</p>
+        <h2 id="sluzby-nadpis" class="section-title">Léčba bolestí zad</h2>
+      </div>
+      <div class="sluzby-grid">
+        <div class="sluzby-text">
+          <p class="sluzby-intro">Nabízím léčení bolesti zad včetně onemocnění páteře:</p>
+          <div id="sluzby-list" class="sluzby-list"></div>
+          <button class="btn-primary big pulse" onclick="window.location.href='tel:+420123456789'">
+            📞 Zavolat — konzultace zdarma
+          </button>
+        </div>
+        <div class="proc-card">
+          <h3 id="proc-nadpis">Proč za mnou?</h3>
+          <ul id="proc-list" class="proc-list"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Prostory & terapie</p>
+        <h2 class="section-title">Fotogalerie</h2>
+      </div>
+      <div id="gallery-grid" class="gallery-grid"></div>
+      <div id="gallery-empty" class="gallery-empty hidden">Fotografie budou brzy přidány.</div>
+    </div>
+    <div id="lightbox" class="lightbox hidden">
+      <div class="lightbox-overlay" id="lightbox-close"></div>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="">
+        <p id="lightbox-popis"></p>
+        <button class="lightbox-close-btn" id="lightbox-close-btn">✕</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Co říkají pacienti</p>
+        <h2 class="section-title">Recenze</h2>
+      </div>
+      <div id="reviews-grid" class="reviews-grid"></div>
+      <div class="review-form-wrap">
+        <h3>Napište recenzi</h3>
+        <form id="review-form" class="review-form">
+          <div class="form-row">
+            <input type="text" name="jmeno" placeholder="Jméno" required />
+            <input type="text" name="prijmeni" placeholder="Příjmení" required />
+          </div>
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="text" placeholder="Vaše zkušenost..." rows="4" required></textarea>
+          <button type="submit" class="btn-primary">Odeslat recenzi</button>
+          <p id="review-msg" class="form-msg hidden"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Najděte nás</p>
+        <h2 class="section-title">Kontakt</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <p class="contact-label">Telefon</p>
+              <a href="tel:+420123456789" class="contact-value">+420 123 456 789</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div>
+              <p class="contact-label">Email</p>
+              <a href="mailto:info@lecbazad.cz" class="contact-value">info@lecbazad.cz</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <p class="contact-label">Adresa</p>
+              <p class="contact-value">Václavské náměstí 1, Praha 1</p>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="window.location.href='tel:+420123456789'">📞 Zavolat nyní</button>
+        </div>
+        <div class="contact-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.3!2d14.4241!3d50.0818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94e9e2a7c1d1%3A0x1!2zVsOhY2xhdnNrw6kgbsOhbcSbc3TDrSAxLCBQcmFoYQ!5e0!3m2!1scs!2scz!4v1"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
