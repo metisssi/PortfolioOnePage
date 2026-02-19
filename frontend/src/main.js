@@ -77,8 +77,8 @@ async function loadGallery() {
 
     empty.classList.add('hidden');
     grid.innerHTML = items.map(item => `
-      <div class="gallery-item" onclick="openLightbox('http://localhost:5000${item.url}', '${item.popis}')">
-        <img src="http://localhost:5000${item.url}" alt="${item.popis || ''}" loading="lazy">
+      <div class="gallery-item" onclick="${item.url}', '${item.popis}')">
+        <img src="${item.url}}" alt="${item.popis || ''}" loading="lazy">
         ${item.popis ? `<div class="gallery-caption">${item.popis}</div>` : ''}
       </div>
     `).join('');

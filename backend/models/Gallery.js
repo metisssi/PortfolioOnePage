@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const gallerySchema = new mongoose.Schema({
-  filename: { type: String, required: true },
-  url: { type: String, required: true },
+  url: { type: String, required: true },      // externí URL obrázku
   popis: { type: String, default: '' }
 }, { timestamps: true });
 
