@@ -1,150 +1,215 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Léčba Bolestí Zad</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Léčba bolestí zad</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
 
-  <nav id="navbar">
-    <div class="nav-logo">Dr. Terapie</div>
-    <div class="nav-links">
-      <button class="nav-btn active" data-section="hero">Domů</button>
-      <button class="nav-btn" data-section="sluzby">Služby</button>
-      <button class="nav-btn" data-section="gallery">Fotogalerie</button>
-      <button class="nav-btn" data-section="reviews">Recenze</button>
-      <button class="nav-btn" data-section="contact">Kontakt</button>
-    </div>
-    <div class="nav-hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </div>
-  </nav>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">Léčba zad</div>
+  <div class="nav-links" id="nav-links">
+    <button class="nav-btn active" data-section="hero">Domů</button>
+    <button class="nav-btn" data-section="sluzby">Služby</button>
+    <button class="nav-btn" data-section="o-mne">O mně</button>
+    <button class="nav-btn" data-section="gallery">Fotogalerie</button>
+    <button class="nav-btn" data-section="reviews">Recenze</button>
+    <button class="nav-btn" data-section="contact">Kontakt</button>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <section id="hero" class="section active">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <p class="hero-tag">Bezoperační léčba</p>
-      <h1 class="hero-title">Léčba<br><span>Bolestí Zad</span></h1>
-      <p class="hero-sub">Rychlé výsledky bez léků a fyzického namáhání</p>
-      <div class="hero-btns">
-        <button class="btn-primary pulse" onclick="window.location.href='tel:+420123456789'">📞 Zavolat</button>
-        <button class="btn-secondary" data-section="sluzby">Naše služby</button>
-      </div>
-      <div class="hero-badge">Vyšetření & konzultace <strong>ZDARMA</strong></div>
+<!-- HERO -->
+<section class="section" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Specializovaná léčba</p>
+    <h1 class="hero-title">Léčba<span>bolestí zad</span></h1>
+    <p class="hero-sub">Profesionální péče bez operace, bez léků a bez fyzického namáhání</p>
+    <div class="hero-btns">
+      <button class="btn-primary big pulse" data-section="contact">Zavolat — konzultace zdarma</button>
+      <button class="btn-secondary" data-section="sluzby">Zjistit více</button>
     </div>
-    <div class="hero-scroll"><span></span></div>
-  </section>
+    <div class="hero-badge">
+      <strong>✓</strong> Vyšetření &amp; konzultace <strong>zdarma</strong>
+    </div>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
 
-  <section id="sluzby" class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <p class="section-tag">Co léčíme</p>
-        <h2 id="sluzby-nadpis" class="section-title">Léčba bolestí zad</h2>
-      </div>
-      <div class="sluzby-grid">
-        <div class="sluzby-text">
-          <p class="sluzby-intro">Nabízím léčení bolesti zad včetně onemocnění páteře:</p>
-          <div id="sluzby-list" class="sluzby-list"></div>
-          <button class="btn-primary big pulse" onclick="window.location.href='tel:+420123456789'">
-            📞 Zavolat — konzultace zdarma
-          </button>
+<!-- SLUZBY -->
+<section class="section" id="sluzby">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-tag">Co léčím</p>
+      <h2 class="section-title" id="sluzby-nadpis">Léčba bolestí zad</h2>
+    </div>
+    <div class="sluzby-grid">
+      <div class="sluzby-left">
+        <p class="sluzby-intro">Nabízím léčení bolestí zad včetně onemocnění páteře. Každý případ je individuální a přistupuji ke každému pacientovi s maximální péčí.</p>
+        <div class="sluzby-list" id="sluzby-list">
+          <!-- filled by JS -->
         </div>
-        <div class="proc-card">
-          <h3 id="proc-nadpis">Proč za mnou?</h3>
-          <ul id="proc-list" class="proc-list"></ul>
-        </div>
+        <button class="btn-primary" data-section="contact">Objednat se</button>
+      </div>
+      <div class="proc-card">
+        <h3 id="proc-nadpis">Proč za mnou?</h3>
+        <ul class="proc-list" id="proc-list">
+          <!-- filled by JS -->
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="gallery" class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <p class="section-tag">Prostory & terapie</p>
-        <h2 class="section-title">Fotogalerie</h2>
-      </div>
-      <div id="gallery-grid" class="gallery-grid"></div>
-      <div id="gallery-empty" class="gallery-empty hidden">Fotografie budou brzy přidány.</div>
+<!-- O MNE -->
+<section class="section" id="o-mne">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-tag">Více o mně</p>
+      <h2 class="section-title" id="omne-nadpis">O mně</h2>
     </div>
-    <div id="lightbox" class="lightbox hidden">
-      <div class="lightbox-overlay" id="lightbox-close"></div>
-      <div class="lightbox-content">
-        <img id="lightbox-img" src="" alt="">
-        <p id="lightbox-popis"></p>
-        <button class="lightbox-close-btn" id="lightbox-close-btn">✕</button>
+    <div class="omne-grid">
+      <div class="omne-text">
+        <p class="omne-intro" id="omne-text"></p>
+        <ul class="omne-list" id="omne-list">
+          <!-- filled by JS -->
+        </ul>
+        <button class="btn-primary" data-section="contact" style="margin-top:2rem">Kontaktovat</button>
       </div>
-    </div>
-  </section>
-
-  <section id="reviews" class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <p class="section-tag">Co říkají pacienti</p>
-        <h2 class="section-title">Recenze</h2>
-      </div>
-      <div id="reviews-grid" class="reviews-grid"></div>
-      <div class="review-form-wrap">
-        <h3>Napište recenzi</h3>
-        <form id="review-form" class="review-form">
-          <div class="form-row">
-            <input type="text" name="jmeno" placeholder="Jméno" required />
-            <input type="text" name="prijmeni" placeholder="Příjmení" required />
+      <div class="omne-visual">
+        <div class="omne-card">
+          <div class="omne-stat">
+            <span class="omne-num">100%</span>
+            <span class="omne-label">Přírodní metoda</span>
           </div>
-          <input type="email" name="email" placeholder="Email" required />
-          <textarea name="text" placeholder="Vaše zkušenost..." rows="4" required></textarea>
-          <button type="submit" class="btn-primary">Odeslat recenzi</button>
-          <p id="review-msg" class="form-msg hidden"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <p class="section-tag">Najděte nás</p>
-        <h2 class="section-title">Kontakt</h2>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="contact-item">
-            <span class="contact-icon">📞</span>
-            <div>
-              <p class="contact-label">Telefon</p>
-              <a href="tel:+420123456789" class="contact-value">+420 123 456 789</a>
-            </div>
+          <div class="omne-divider"></div>
+          <div class="omne-stat">
+            <span class="omne-num">0</span>
+            <span class="omne-label">Vedlejších účinků</span>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">✉️</span>
-            <div>
-              <p class="contact-label">Email</p>
-              <a href="mailto:info@lecbazad.cz" class="contact-value">info@lecbazad.cz</a>
-            </div>
+          <div class="omne-divider"></div>
+          <div class="omne-stat">
+            <span class="omne-num">∞</span>
+            <span class="omne-label">Individuální přístup</span>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">📍</span>
-            <div>
-              <p class="contact-label">Adresa</p>
-              <p class="contact-value">Václavské náměstí 1, Praha 1</p>
-            </div>
-          </div>
-          <button class="btn-primary" onclick="window.location.href='tel:+420123456789'">📞 Zavolat nyní</button>
-        </div>
-        <div class="contact-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.3!2d14.4241!3d50.0818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94e9e2a7c1d1%3A0x1!2zVsOhY2xhdnNrw6kgbsOhbcSbc3TDrSAxLCBQcmFoYQ!5e0!3m2!1scs!2scz!4v1"
-            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
-          </iframe>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <script type="module" src="/src/main.js"></script>
+<!-- GALLERY -->
+<section class="section" id="gallery">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-tag">Galerie</p>
+      <h2 class="section-title">Fotogalerie</h2>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <p class="gallery-empty hidden" id="gallery-empty">Galerie bude brzy doplněna.</p>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox">
+  <div class="lightbox-overlay" id="lightbox-close"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close-btn" id="lightbox-close-btn">✕</button>
+    <img id="lightbox-img" src="" alt="">
+    <p id="lightbox-popis"></p>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-tag">Hodnocení</p>
+      <h2 class="section-title">Recenze pacientů</h2>
+    </div>
+    <div class="reviews-grid" id="reviews-grid"></div>
+
+    <div class="review-form-wrap">
+      <h3>Napište recenzi</h3>
+      <form class="review-form" id="review-form">
+        <div class="form-row">
+          <input type="text" name="jmeno" placeholder="Jméno" required>
+          <input type="text" name="prijmeni" placeholder="Příjmení" required>
+        </div>
+        <input type="email" name="email" placeholder="E-mail" required>
+        <textarea name="text" placeholder="Vaše zkušenost..." rows="4" required></textarea>
+        <button type="submit" class="btn-primary">Odeslat recenzi</button>
+        <p class="form-msg hidden" id="review-msg"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-tag">Kde mě najdete</p>
+      <h2 class="section-title">Kontakt</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <p class="contact-label">Adresa</p>
+            <p class="contact-value">Všenorská 60, 252 02 Jíloviště</p>
+          </div>
+        </div>
+        <div class="contact-item" id="contact-phone-wrap" style="display:none">
+          <span class="contact-icon">📞</span>
+          <div>
+            <p class="contact-label">Telefon</p>
+            <a class="contact-value" id="contact-phone" href="#"></a>
+          </div>
+        </div>
+        <div class="contact-item" id="contact-email-wrap" style="display:none">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <p class="contact-label">E-mail</p>
+            <a class="contact-value" id="contact-email" href="#"></a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">🕐</span>
+          <div>
+            <p class="contact-label">Konzultace</p>
+            <p class="contact-value">Vyšetření &amp; konzultace zdarma</p>
+          </div>
+        </div>
+        <button class="btn-primary" id="call-btn" style="margin-top:1rem">Zavolat nyní</button>
+      </div>
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2568.123456789!2d14.2876!3d49.9234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b8e0000000000%3A0x0!2sV%C5%A1enorsk%C3%A1+60%2C+252+02+J%C3%ADlovi%C5%A1t%C4%9B!5e0!3m2!1scs!2scz!4v1234567890"
+          width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <p>© 2025 Léčba bolestí zad · Všenorská 60, 252 02 Jíloviště</p>
+</footer>
+
+<script type="module" src="/src/main.js"></script>
 </body>
 </html>
