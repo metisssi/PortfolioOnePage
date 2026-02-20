@@ -48,7 +48,7 @@
 <div id="login-screen" class="card">
   <h1>🔒 Admin</h1>
   <h2>Přihlášení</h2>
-  <input type="password" id="password" placeholder="Heslo">
+  <input type="password" id="password" placeholder="Heslo" onkeydown="if(event.key==='Enter')login()">
   <button onclick="login()">Přihlásit se</button>
   <div id="login-msg" class="msg" style="display:none"></div>
 </div>
@@ -82,7 +82,7 @@
     <button onclick="saveContent()">💾 Uložit vše</button>
     <div id="content-msg" class="msg" style="display:none"></div>
 
-    <p class="note">ℹ️ Kontaktní údaje (telefon, email, adresa) se upravují přímo v souboru frontend/index.html</p>
+    <p class="note">ℹ️ Kontaktní údaje (telefon, email, adresa) se upravují přímo v souboru index.html</p>
   </div>
 
   <!-- GALLERY -->
@@ -111,14 +111,14 @@ if (token) showApp();
 
 async function login() {
   const password = document.getElementById('password').value;
-  const res  = await fetch(`${API}/auth/login`, {
+  const res = await fetch(`${API}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password })
   });
   const data = await res.json();
   if (res.ok) { token = data.token; localStorage.setItem('admin_token', token); showApp(); }
-  else showMsg('login-msg', data.message, false);
+  else showMsg('login-msg', data.message || 'Chyba přihlášení', false);
 }
 
 function logout() { localStorage.removeItem('admin_token'); location.reload(); }
@@ -131,7 +131,7 @@ function showApp() {
 
 // —— CONTENT ——
 async function loadContent() {
-  const res  = await fetch(`${API}/content`);
+  const res = await fetch(`${API}/content`);
   const data = await res.json();
   document.getElementById('sluzby-nadpis').value = data.sluzby?.nadpis || '';
   document.getElementById('sluzby-text').value   = data.sluzby?.text   || '';
@@ -168,10 +168,9 @@ async function saveContent() {
 
 // —— GALLERY ——
 async function loadGallery() {
-  const res   = await fetch(`${API}/gallery`);
+  const res = await fetch(`${API}/gallery`);
   const items = await res.json();
-  const list  = document.getElementById('gallery-list');
-  list.innerHTML = items.map(item => `
+  document.getElementById('gallery-list').innerHTML = items.map(item => `
     <div class="gallery-item">
       <img src="${item.url}" alt="${item.popis}" onerror="this.src='https://placehold.co/180x130?text=Error'">
       <button onclick="deletePhoto('${item._id}')">✕</button>
@@ -193,7 +192,7 @@ async function addPhoto() {
     document.getElementById('gallery-popis').value = '';
     showMsg('gallery-msg', 'Přidáno ✓', true);
     loadGallery();
-  } else { showMsg('gallery-msg', 'Chyba!', false); }
+  } else showMsg('gallery-msg', 'Chyba!', false);
 }
 
 async function deletePhoto(id) {
@@ -204,10 +203,9 @@ async function deletePhoto(id) {
 
 // —— REVIEWS ——
 async function loadReviews() {
-  const res   = await fetch(`${API}/reviews/all`, { headers: { 'Authorization': `Bearer ${token}` } });
+  const res = await fetch(`${API}/reviews/all`, { headers: { 'Authorization': `Bearer ${token}` } });
   const items = await res.json();
-  const list  = document.getElementById('reviews-list');
-  list.innerHTML = items.map(r => `
+  document.getElementById('reviews-list').innerHTML = items.map(r => `
     <div class="review-item">
       <div class="info">
         <div class="name">${r.jmeno} ${r.prijmeni}
