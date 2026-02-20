@@ -69,7 +69,6 @@ body {
 }
 
 .nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.06); }
-
 .nav-btn.active { color: var(--white); font-weight: 500; }
 
 .nav-btn.active::after {
@@ -106,7 +105,7 @@ body {
   display: none;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .section.active { display: flex; flex-direction: column; }
@@ -137,7 +136,9 @@ body {
 
 .section-header { margin-bottom: 3.5rem; }
 
-/* ─── HERO ─── */
+/* ═══════════════════════════════════════════
+   HERO — Cycling Background Slider
+   ═══════════════════════════════════════════ */
 #hero {
   position: relative;
   min-height: 100vh;
@@ -147,32 +148,75 @@ body {
   overflow: hidden;
 }
 
-.hero-bg {
+/* ── Sliding backgrounds ── */
+.hero-slider {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a2e 100%);
-  transform: scale(1.03);
-  transition: transform 8s ease;
+  z-index: 0;
 }
 
-/* subtle animated noise texture */
-.hero-bg::after {
-  content: '';
+.hero-slide {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.3;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
-#hero.visible .hero-bg { transform: scale(1); }
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
 
+.hero-slide.leaving {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Gradient overlays ── */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 60% 50%, rgba(192,57,43,0.12) 0%, transparent 60%),
-              linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 60% 50%, rgba(192,57,43,0.10) 0%, transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.65) 100%);
 }
 
+/* ── Floating particles ── */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(192, 57, 43, 0.15);
+  filter: blur(40px);
+  animation: particleFloat 12s ease-in-out infinite;
+}
+
+.p1 { width: 300px; height: 300px; top: 10%; left: -5%; animation-delay: 0s; }
+.p2 { width: 200px; height: 200px; bottom: 15%; right: -3%; animation-delay: -4s; }
+.p3 { width: 150px; height: 150px; top: 50%; left: 60%; animation-delay: -8s; background: rgba(255,255,255,0.03); }
+
+@keyframes particleFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -40px) scale(1.1); }
+  66%      { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ── Hero content ── */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -237,6 +281,33 @@ body {
 }
 
 .hero-badge strong { color: var(--white); }
+
+/* ── Slide indicators ── */
+.hero-indicators {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.hero-dot {
+  width: 32px;
+  height: 3px;
+  border: none;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  padding: 0;
+}
+
+.hero-dot.active {
+  background: var(--red);
+  width: 48px;
+}
 
 .hero-scroll {
   position: absolute;
@@ -320,10 +391,10 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.06);
   font-size: 1rem;
   color: rgba(255,255,255,0.85);
-  transition: color var(--transition);
+  transition: color var(--transition), padding-left var(--transition);
 }
 
-.sluzby-item:hover { color: var(--white); }
+.sluzby-item:hover { color: var(--white); padding-left: 0.5rem; }
 
 .sluzby-item::before {
   content: '';
@@ -331,7 +402,10 @@ body {
   border-radius: 50%;
   background: var(--red);
   flex-shrink: 0;
+  transition: transform var(--transition);
 }
+
+.sluzby-item:hover::before { transform: scale(1.5); }
 
 .proc-card {
   background: var(--dark2);
@@ -364,8 +438,10 @@ body {
   color: rgba(255,255,255,0.75);
   padding: 0.6rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: color var(--transition), padding-left var(--transition);
 }
 
+.proc-list li:hover { color: var(--white); padding-left: 0.3rem; }
 .proc-list li:last-child { border-bottom: none; }
 .proc-list li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; }
 
@@ -432,10 +508,7 @@ body {
   letter-spacing: 0.08em;
 }
 
-.omne-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.06);
-}
+.omne-divider { height: 1px; background: rgba(255,255,255,0.06); }
 
 /* ─── GALLERY ─── */
 #gallery { background: var(--dark); }
@@ -573,7 +646,6 @@ body {
 }
 
 .review-form { display: flex; flex-direction: column; gap: 1rem; }
-
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
 .review-form input,
@@ -612,9 +684,7 @@ body {
 }
 
 .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-
 .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
-
 .contact-icon { font-size: 1.4rem; margin-top: 0.1rem; flex-shrink: 0; }
 
 .contact-label {
@@ -634,6 +704,8 @@ body {
 }
 
 a.contact-value:hover { color: var(--red); }
+
+.contact-cta { margin-top: 1rem; }
 
 .contact-map iframe {
   border-radius: 16px;
@@ -700,8 +772,7 @@ a.contact-value:hover { color: var(--red); }
   }
 
   .form-row { grid-template-columns: 1fr; }
-
   .section-inner { padding: calc(var(--nav-h) + 3rem) 1.5rem 3rem; }
-
   .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+  .hero-indicators { bottom: 4rem; }
 }

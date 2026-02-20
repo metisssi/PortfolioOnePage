@@ -1,37 +1,25 @@
-import { API } from '../utils/config.js';
+const mongoose = require('mongoose');
 
-export async function initContact() {
-  // Load phone from content if present
-  try {
-    const res = await fetch(`${API}/content`);
-    const data = await res.json();
-
-    const phone = data.sluzby?.telefon;
-    if (phone) {
-      const phoneWrap = document.getElementById('contact-phone-wrap');
-      const phoneEl   = document.getElementById('contact-phone');
-      if (phoneWrap && phoneEl) {
-        phoneEl.textContent = phone;
-        phoneEl.href = `tel:${phone.replace(/\s/g, '')}`;
-        phoneWrap.style.display = 'flex';
-      }
-      // call button
-      const callBtn = document.getElementById('call-btn');
-      if (callBtn) {
-        callBtn.textContent = `Zavolat: ${phone}`;
-        callBtn.addEventListener('click', () => {
-          window.location.href = `tel:${phone.replace(/\s/g, '')}`;
-        });
-      }
-    } else {
-      // no phone yet — hide call button
-      const callBtn = document.getElementById('call-btn');
-      if (callBtn) callBtn.style.display = 'none';
-    }
-
-  } catch (e) {
-    console.error('Chyba kontaktu:', e);
-    const callBtn = document.getElementById('call-btn');
-    if (callBtn) callBtn.style.display = 'none';
+const contentSchema = new mongoose.Schema({
+  sluzby: {
+    nadpis: { type: String, default: 'Léčba bolestí zad' },
+    text: { type: String, default: '' },
+  },
+  proc_za_mnou: {
+    nadpis: { type: String, default: 'Proč za mnou?' },
+    body: [{ type: String }]
+  },
+  o_mne: {
+    nadpis: { type: String, default: 'O mně' },
+    text: { type: String, default: '' },
+    body: [{ type: String }],
+    foto: { type: String, default: '' }
+  },
+  kontakt: {
+    telefon: { type: String, default: '' },
+    email: { type: String, default: '' },
+    adresa: { type: String, default: '' }
   }
-}
+});
+
+module.exports = mongoose.model('Content', contentSchema);

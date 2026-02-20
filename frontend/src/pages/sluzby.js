@@ -26,7 +26,7 @@ export async function loadSluzby() {
       sluzbyList.innerHTML = lines.map(line => {
         const clean = line.replace(/^\d+\.\s*/, '');
         return `<div class="sluzby-item">${clean}</div>`;
-      }).join('') || '<div class="sluzby-item">Výhřezy plotének</div>';
+      }).join('') || '<div class="sluzby-item">Výhřezlé ploténky</div>';
     }
 
     const procList = document.getElementById('proc-list');
@@ -46,6 +46,17 @@ export async function loadSluzby() {
     if (omneList) {
       omneList.innerHTML = (data.o_mne?.body || [])
         .map(item => `<li>${item}</li>`).join('');
+    }
+
+    // --- O MNE foto ---
+    const omneImg = document.getElementById('omne-foto');
+    const omneImgWrap = document.getElementById('omne-foto-wrap');
+    if (omneImg && data.o_mne?.foto) {
+      omneImg.src = data.o_mne.foto;
+      omneImg.alt = data.o_mne?.nadpis || 'O mně';
+      if (omneImgWrap) omneImgWrap.style.display = 'block';
+    } else if (omneImgWrap && !data.o_mne?.foto) {
+      omneImgWrap.style.display = 'none';
     }
 
   } catch (e) {

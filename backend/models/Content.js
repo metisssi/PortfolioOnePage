@@ -4,6 +4,8 @@ const contentSchema = new mongoose.Schema({
   sluzby: {
     nadpis: { type: String, default: 'Léčba bolestí zad' },
     text: { type: String, default: '' },
+    telefon: { type: String, default: '' },
+    email: { type: String, default: '' }
   },
   proc_za_mnou: {
     nadpis: { type: String, default: 'Proč za mnou?' },
@@ -11,7 +13,9 @@ const contentSchema = new mongoose.Schema({
   },
   o_mne: {
     nadpis: { type: String, default: 'O mně' },
-    body: [{ type: String }]
+    text: { type: String, default: '' },
+    body: [{ type: String }],
+    foto: { type: String, default: '' }
   }
 });
 

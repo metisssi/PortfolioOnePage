@@ -78,6 +78,14 @@
     <label>Body (každý na nový řádek)</label>
     <textarea id="omne-body" placeholder="15 let zkušeností&#10;Individuální přístup"></textarea>
 
+    <h2>📞 Kontakt</h2>
+    <label>Telefon</label>
+    <input id="kontakt-telefon" placeholder="+420 123 456 789">
+    <label>E-mail</label>
+    <input id="kontakt-email" placeholder="info@example.cz">
+    <label>Adresa</label>
+    <input id="kontakt-adresa" placeholder="Praha, Česká republika">
+
     <button onclick="saveContent()">💾 Uložit vše</button>
     <div id="content-msg" class="msg" style="display:none"></div>
   </div>
@@ -137,6 +145,10 @@ async function loadContent() {
   document.getElementById('omne-nadpis').value   = data.o_mne?.nadpis || '';
   document.getElementById('omne-text').value     = data.o_mne?.text   || '';
   document.getElementById('omne-body').value     = (data.o_mne?.body  || []).join('\n');
+  // Kontakt
+  document.getElementById('kontakt-telefon').value = data.kontakt?.telefon || '';
+  document.getElementById('kontakt-email').value   = data.kontakt?.email   || '';
+  document.getElementById('kontakt-adresa').value  = data.kontakt?.adresa  || '';
 }
 
 async function saveContent() {
@@ -153,6 +165,11 @@ async function saveContent() {
       nadpis: document.getElementById('omne-nadpis').value,
       text:   document.getElementById('omne-text').value,
       body:   document.getElementById('omne-body').value.split('\n').filter(l => l.trim())
+    },
+    kontakt: {
+      telefon: document.getElementById('kontakt-telefon').value,
+      email:   document.getElementById('kontakt-email').value,
+      adresa:  document.getElementById('kontakt-adresa').value
     }
   };
   const res = await fetch(`${API}/content`, {
