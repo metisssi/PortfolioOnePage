@@ -27,15 +27,10 @@
 </nav>
 
 <!-- ═══ HERO ═══ -->
-<section id="hero" class="section active visible">
-  <!-- Cycling background images -->
-  <div class="hero-slider">
-    <div class="hero-slide active" style="background-image: url('assets/mainpicture1.JPG')"></div>
-    <div class="hero-slide" style="background-image: url('assets/mainpicture2.JPG')"></div>
-  </div>
+<section id="hero" class="section visible">
+  <div class="hero-bg" style="background-image: url('assets/hero-bg.jpg')"></div>
   <div class="hero-overlay"></div>
 
-  <!-- Floating particles -->
   <div class="hero-particles">
     <div class="particle p1"></div>
     <div class="particle p2"></div>
@@ -43,20 +38,31 @@
   </div>
 
   <div class="hero-content">
-    <div class="hero-tag">Profesionální péče o vaše zdraví</div>
-    <h1 class="hero-title">Zbavíme vás<span>bolesti zad</span></h1>
-    <p class="hero-sub">Trápí vás bolesti? Naše metoda pomůže i tam, kde jiní neuspěli.<br>Bez operace. Bez léků. S výsledky.</p>
-    <div class="hero-btns">
-      <button class="btn-primary big pulse" id="call-btn" data-section="contact">Zavolat — konzultace zdarma</button>
-      <button class="btn-secondary" data-section="sluzby">Zjistit více</button>
-    </div>
-    <div class="hero-badge">✓ Vyšetření &amp; konzultace <strong>zdarma</strong></div>
-  </div>
+    <div class="hero-main">
+      <!-- Left: text -->
+      <div class="hero-text">
+        <div class="hero-tag">Profesionální péče o vaše zdraví</div>
+        <h1 class="hero-title">Zbavíme vás<span>bolesti zad</span></h1>
+        <p class="hero-sub">Trápí vás bolesti? Naše metoda pomůže i tam, kde jiní neuspěli.<br>Bez operace. Bez léků. S výsledky.</p>
+        <div class="hero-btns">
+          <a class="btn-primary big pulse" href="tel:+420123456789">Zavolat — konzultace zdarma</a>
+          <button class="btn-secondary" data-section="sluzby">Zjistit více</button>
+        </div>
+        <div class="hero-badge">✓ Vyšetření &amp; konzultace <strong>zdarma</strong></div>
+      </div>
 
-  <!-- Slide indicators -->
-  <div class="hero-indicators">
-    <button class="hero-dot active" data-slide="0"></button>
-    <button class="hero-dot" data-slide="1"></button>
+      <!-- Right: small preview images -->
+      <div class="hero-images">
+        <div class="hero-img-card">
+          <img src="assets/mainpicture1.JPG" alt="Bolesti zad — ukázka problému">
+          <div class="hero-img-label">Trápí vás záda?</div>
+        </div>
+        <div class="hero-img-card">
+          <img src="assets/mainpicture2.JPG" alt="Léčba — výsledek terapie">
+          <div class="hero-img-label">Pomůžeme vám.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="hero-scroll"><span></span></div>
@@ -166,7 +172,7 @@
   </div>
 </section>
 
-<!-- ═══ KONTAKT ═══ -->
+<!-- ═══ KONTAKT (hardcoded — no MongoDB) ═══ -->
 <section id="contact" class="section">
   <div class="section-inner">
     <div class="section-header">
@@ -176,32 +182,32 @@
     <div class="contact-grid">
       <div class="contact-info">
 
-        <div class="contact-item" id="contact-phone-wrap" style="display:none">
+        <div class="contact-item">
           <div class="contact-icon">📞</div>
           <div>
             <div class="contact-label">Telefon</div>
-            <a class="contact-value" id="contact-phone" href="tel:"></a>
+            <a class="contact-value" href="tel:+420123456789">+420 123 456 789</a>
           </div>
         </div>
 
-        <div class="contact-item" id="contact-email-wrap" style="display:none">
+        <div class="contact-item">
           <div class="contact-icon">✉️</div>
           <div>
             <div class="contact-label">E-mail</div>
-            <a class="contact-value" id="contact-email" href="mailto:"></a>
+            <a class="contact-value" href="mailto:info@example.cz">info@example.cz</a>
           </div>
         </div>
 
-        <div class="contact-item" id="contact-address-wrap" style="display:none">
+        <div class="contact-item">
           <div class="contact-icon">📍</div>
           <div>
             <div class="contact-label">Adresa</div>
-            <span class="contact-value" id="contact-address"></span>
+            <span class="contact-value">Praha, Česká republika</span>
           </div>
         </div>
 
         <div class="contact-cta">
-          <button class="btn-primary big pulse" id="contact-call-btn">Zavolat nyní</button>
+          <a class="btn-primary big pulse" href="tel:+420123456789">Zavolat nyní</a>
         </div>
 
       </div>

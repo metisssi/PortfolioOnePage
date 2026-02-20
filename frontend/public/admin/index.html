@@ -40,6 +40,7 @@
     .badge { font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 100px; }
     .badge.pending  { background: rgba(241,196,15,0.2);  color: #f1c40f; }
     .badge.approved { background: rgba(46,204,113,0.2);  color: #2ecc71; }
+    .note { font-size: 0.8rem; color: #666; font-style: italic; margin-top: 0.5rem; }
   </style>
 </head>
 <body>
@@ -56,7 +57,7 @@
   <h1>⚙️ Admin panel</h1>
   <button class="secondary" onclick="logout()">Odhlásit</button>
 
-  <!-- CONTENT: SLUZBY -->
+  <!-- CONTENT -->
   <div class="card">
     <h2>📝 Služby</h2>
     <label>Nadpis</label>
@@ -78,16 +79,10 @@
     <label>Body (každý na nový řádek)</label>
     <textarea id="omne-body" placeholder="15 let zkušeností&#10;Individuální přístup"></textarea>
 
-    <h2>📞 Kontakt</h2>
-    <label>Telefon</label>
-    <input id="kontakt-telefon" placeholder="+420 123 456 789">
-    <label>E-mail</label>
-    <input id="kontakt-email" placeholder="info@example.cz">
-    <label>Adresa</label>
-    <input id="kontakt-adresa" placeholder="Praha, Česká republika">
-
     <button onclick="saveContent()">💾 Uložit vše</button>
     <div id="content-msg" class="msg" style="display:none"></div>
+
+    <p class="note">ℹ️ Kontaktní údaje (telefon, email, adresa) se upravují přímo v souboru frontend/index.html</p>
   </div>
 
   <!-- GALLERY -->
@@ -134,7 +129,7 @@ function showApp() {
   loadContent(); loadGallery(); loadReviews();
 }
 
-// ── CONTENT ──
+// —— CONTENT ——
 async function loadContent() {
   const res  = await fetch(`${API}/content`);
   const data = await res.json();
@@ -145,10 +140,6 @@ async function loadContent() {
   document.getElementById('omne-nadpis').value   = data.o_mne?.nadpis || '';
   document.getElementById('omne-text').value     = data.o_mne?.text   || '';
   document.getElementById('omne-body').value     = (data.o_mne?.body  || []).join('\n');
-  // Kontakt
-  document.getElementById('kontakt-telefon').value = data.kontakt?.telefon || '';
-  document.getElementById('kontakt-email').value   = data.kontakt?.email   || '';
-  document.getElementById('kontakt-adresa').value  = data.kontakt?.adresa  || '';
 }
 
 async function saveContent() {
@@ -165,11 +156,6 @@ async function saveContent() {
       nadpis: document.getElementById('omne-nadpis').value,
       text:   document.getElementById('omne-text').value,
       body:   document.getElementById('omne-body').value.split('\n').filter(l => l.trim())
-    },
-    kontakt: {
-      telefon: document.getElementById('kontakt-telefon').value,
-      email:   document.getElementById('kontakt-email').value,
-      adresa:  document.getElementById('kontakt-adresa').value
     }
   };
   const res = await fetch(`${API}/content`, {
@@ -180,7 +166,7 @@ async function saveContent() {
   showMsg('content-msg', res.ok ? 'Uloženo ✓' : 'Chyba!', res.ok);
 }
 
-// ── GALLERY ──
+// —— GALLERY ——
 async function loadGallery() {
   const res   = await fetch(`${API}/gallery`);
   const items = await res.json();
@@ -216,7 +202,7 @@ async function deletePhoto(id) {
   loadGallery();
 }
 
-// ── REVIEWS ──
+// —— REVIEWS ——
 async function loadReviews() {
   const res   = await fetch(`${API}/reviews/all`, { headers: { 'Authorization': `Bearer ${token}` } });
   const items = await res.json();
