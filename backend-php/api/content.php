@@ -1,16 +1,13 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$db = getDB();
 $method = getMethod();
 
 // --- GET: public ---
 if ($method === 'GET') {
-    $stmt = $db->query('SELECT * FROM content LIMIT 1');
-    $row = $stmt->fetch();
+    $doc = mongoFindOne('content');
 
-    if (!$row) {
-        // Return default empty content
+    if (!$doc) {
         jsonResponse([
             'sluzby' => ['nadpis' => 'Léčba bolestí zad', 'text' => ''],
             'proc_za_mnou' => ['nadpis' => 'Proč za mnou?', 'body' => []],
@@ -19,20 +16,9 @@ if ($method === 'GET') {
     }
 
     jsonResponse([
-        'sluzby' => [
-            'nadpis' => $row['sluzby_nadpis'],
-            'text' => $row['sluzby_text']
-        ],
-        'proc_za_mnou' => [
-            'nadpis' => $row['proc_nadpis'],
-            'body' => json_decode($row['proc_body'], true) ?: []
-        ],
-        'o_mne' => [
-            'nadpis' => $row['omne_nadpis'],
-            'text' => $row['omne_text'],
-            'body' => json_decode($row['omne_body'], true) ?: [],
-            'foto' => $row['omne_foto']
-        ]
+        'sluzby' => $doc['sluzby'] ?? ['nadpis' => '', 'text' => ''],
+        'proc_za_mnou' => $doc['proc_za_mnou'] ?? ['nadpis' => '', 'body' => []],
+        'o_mne' => $doc['o_mne'] ?? ['nadpis' => '', 'text' => '', 'body' => [], 'foto' => '']
     ]);
 }
 
@@ -41,55 +27,30 @@ if ($method === 'PUT') {
     requireAuth();
     $body = getRequestBody();
 
-    $sluzby = $body['sluzby'] ?? [];
-    $proc = $body['proc_za_mnou'] ?? [];
-    $omne = $body['o_mne'] ?? [];
+    $update = [
+        'sluzby' => [
+            'nadpis' => $body['sluzby']['nadpis'] ?? '',
+            'text'   => $body['sluzby']['text'] ?? ''
+        ],
+        'proc_za_mnou' => [
+            'nadpis' => $body['proc_za_mnou']['nadpis'] ?? '',
+            'body'   => $body['proc_za_mnou']['body'] ?? []
+        ],
+        'o_mne' => [
+            'nadpis' => $body['o_mne']['nadpis'] ?? '',
+            'text'   => $body['o_mne']['text'] ?? '',
+            'body'   => $body['o_mne']['body'] ?? [],
+            'foto'   => $body['o_mne']['foto'] ?? ''
+        ]
+    ];
 
-    // Check if row exists
-    $stmt = $db->query('SELECT id FROM content LIMIT 1');
-    $exists = $stmt->fetch();
+    mongoUpdateOne('content', [], ['$set' => $update], true);
 
-    if ($exists) {
-        $stmt = $db->prepare('UPDATE content SET
-            sluzby_nadpis = ?, sluzby_text = ?,
-            proc_nadpis = ?, proc_body = ?,
-            omne_nadpis = ?, omne_text = ?, omne_body = ?, omne_foto = ?
-            WHERE id = ?');
-        $stmt->execute([
-            $sluzby['nadpis'] ?? '',
-            $sluzby['text'] ?? '',
-            $proc['nadpis'] ?? '',
-            json_encode($proc['body'] ?? [], JSON_UNESCAPED_UNICODE),
-            $omne['nadpis'] ?? '',
-            $omne['text'] ?? '',
-            json_encode($omne['body'] ?? [], JSON_UNESCAPED_UNICODE),
-            $omne['foto'] ?? '',
-            $exists['id']
-        ]);
-    } else {
-        $stmt = $db->prepare('INSERT INTO content
-            (sluzby_nadpis, sluzby_text, proc_nadpis, proc_body, omne_nadpis, omne_text, omne_body, omne_foto)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->execute([
-            $sluzby['nadpis'] ?? '',
-            $sluzby['text'] ?? '',
-            $proc['nadpis'] ?? '',
-            json_encode($proc['body'] ?? [], JSON_UNESCAPED_UNICODE),
-            $omne['nadpis'] ?? '',
-            $omne['text'] ?? '',
-            json_encode($omne['body'] ?? [], JSON_UNESCAPED_UNICODE),
-            $omne['foto'] ?? ''
-        ]);
-    }
-
-    // Return updated content
-    $stmt = $db->query('SELECT * FROM content LIMIT 1');
-    $row = $stmt->fetch();
-
+    $doc = mongoFindOne('content');
     jsonResponse([
-        'sluzby' => ['nadpis' => $row['sluzby_nadpis'], 'text' => $row['sluzby_text']],
-        'proc_za_mnou' => ['nadpis' => $row['proc_nadpis'], 'body' => json_decode($row['proc_body'], true) ?: []],
-        'o_mne' => ['nadpis' => $row['omne_nadpis'], 'text' => $row['omne_text'], 'body' => json_decode($row['omne_body'], true) ?: [], 'foto' => $row['omne_foto']]
+        'sluzby' => $doc['sluzby'],
+        'proc_za_mnou' => $doc['proc_za_mnou'],
+        'o_mne' => $doc['o_mne']
     ]);
 }
 

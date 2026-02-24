@@ -1,58 +1,56 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$db = getDB();
 $method = getMethod();
 $id = $_GET['id'] ?? null;
 
-// --- GET: public - list all ---
+// --- GET: public ---
 if ($method === 'GET') {
-    $stmt = $db->query('SELECT * FROM gallery ORDER BY created_at DESC');
-    $items = $stmt->fetchAll();
+    $items = mongoFind('gallery', [], ['sort' => ['createdAt' => -1]]);
 
-    // Format for frontend compatibility (use 'id' as string like MongoDB _id)
     $result = array_map(function ($item) {
         return [
-            '_id' => (string)$item['id'],
-            'url' => $item['url'],
-            'popis' => $item['popis'],
-            'createdAt' => $item['created_at']
+            '_id'       => $item['_id'],
+            'url'       => $item['url'] ?? '',
+            'popis'     => $item['popis'] ?? '',
+            'createdAt' => $item['createdAt'] ?? ''
         ];
     }, $items);
 
     jsonResponse($result);
 }
 
-// --- POST: admin - add photo ---
+// --- POST: admin ---
 if ($method === 'POST') {
     requireAuth();
     $body = getRequestBody();
-    $url = trim($body['url'] ?? '');
+    $url   = trim($body['url'] ?? '');
     $popis = trim($body['popis'] ?? '');
 
     if (!$url) {
         jsonResponse(['message' => 'URL je povinné'], 400);
     }
 
-    $stmt = $db->prepare('INSERT INTO gallery (url, popis) VALUES (?, ?)');
-    $stmt->execute([$url, $popis]);
+    $newId = mongoInsertOne('gallery', [
+        'url'       => $url,
+        'popis'     => $popis,
+        'createdAt' => new MongoDB\BSON\UTCDateTime()
+    ]);
 
-    $newId = $db->lastInsertId();
-    jsonResponse([
-        '_id' => (string)$newId,
-        'url' => $url,
-        'popis' => $popis
-    ], 201);
+    jsonResponse(['_id' => $newId, 'url' => $url, 'popis' => $popis], 201);
 }
 
-// --- DELETE: admin - delete photo ---
+// --- DELETE: admin ---
 if ($method === 'DELETE' && $id) {
     requireAuth();
 
-    $stmt = $db->prepare('DELETE FROM gallery WHERE id = ?');
-    $stmt->execute([$id]);
+    try {
+        $deleted = mongoDeleteOne('gallery', ['_id' => toObjectId($id)]);
+    } catch (Exception $e) {
+        jsonResponse(['message' => 'Neplatné ID'], 400);
+    }
 
-    if ($stmt->rowCount() === 0) {
+    if ($deleted === 0) {
         jsonResponse(['message' => 'Nenalezeno'], 404);
     }
 
