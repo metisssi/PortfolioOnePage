@@ -34,7 +34,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2.5rem;
+ padding: 0.5rem 2rem; /* Původně tam bylo pravděpodobně 1rem nebo více */
+  min-height: 60px;     /* Nastavte pevnou menší výšku */
   z-index: 1000;
   background: rgba(10,10,10,0.4);
   backdrop-filter: blur(12px);
@@ -49,7 +50,7 @@ body {
 
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.2rem;    
   font-weight: 700;
   color: var(--white);
   cursor: pointer;
@@ -90,6 +91,19 @@ body {
   background: none;
   border: none;
   padding: 0.25rem;
+}
+
+.omne-image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition);
+}
+
+.omne-image-container:hover img {
+  transform: scale(1.03);
+  border-color: var(--red) !important;
 }
 
 .nav-hamburger span {
@@ -141,7 +155,9 @@ body {
   line-height: 1.15;
 }
 
-.section-header { margin-bottom: 3.5rem; }
+.section-header {
+  margin-bottom: 2rem; /* Snížení ze 3.5rem pro kompaktnější vzhled */
+}
 
 /* ═══════════════════════════════════════════
    HERO — Background image + small preview images
@@ -152,6 +168,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding-top: 60px;
 }
 
 /* ── Full background image ── */
@@ -213,13 +230,14 @@ body {
   z-index: 2;
   width: 100%;
   max-width: 1200px;
-  padding: 2rem 2.5rem;
+  padding-top: 2rem;    /* Zmenšete horní odsazení */
+  padding-bottom: 2rem;
 }
 
 .hero-main {
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: 0.8rem;
 }
 
 .hero-text {
@@ -243,7 +261,7 @@ body {
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 900;
   line-height: 1.0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   opacity: 0;
   animation: fadeUp 0.8s 0.4s forwards;
 }
@@ -478,9 +496,15 @@ body {
 
 .omne-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 4rem;
+  /* Změna: Sloupce se přizpůsobí obsahu */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 2rem; /* Menší mezera, pokud je text pryč */
   align-items: start;
+}
+
+.omne-intro:empty,
+.omne-list:empty {
+  display: none;
 }
 
 .omne-intro {
@@ -568,15 +592,20 @@ body {
 .gallery-caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  padding: 0.8rem;
+  /* Změna: tmavší pozadí pro lepší čitelnost, když je vidět pořád */
+  background: rgba(0, 0, 0, 0.7); 
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.9);
-  transform: translateY(100%);
-  transition: transform var(--transition);
+  color: rgba(255, 255, 255, 0.9);
+  /* Klíčová změna: odstranění transformace, aby popisek nebyl schovaný */
+  transform: translateY(0); 
+  transition: background var(--transition);
 }
 
-.gallery-item:hover .gallery-caption { transform: translateY(0); }
+/* Pokud chcete, aby se při najetí myší pozadí popisku ještě trochu ztmavilo */
+.gallery-item:hover .gallery-caption {
+  background: rgba(0, 0, 0, 0.85);
+}
 .gallery-empty { text-align: center; color: var(--gray); padding: 4rem; grid-column: 1/-1; }
 
 /* ─── LIGHTBOX ─── */
@@ -773,28 +802,75 @@ a.contact-value:hover { color: var(--red); }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
-  .sluzby-grid,
-  .omne-grid,
-  .contact-grid { grid-template-columns: 1fr; }
-
-  .proc-card,
-  .omne-card { position: static; }
+  /* 1. Hlavní kontejner - méně místa nahoře */
+  .hero-content {
+    padding-top: 50px !important; /* Prostor pro fixní menu */
+    padding-bottom: 20px;
+  }
 
   .hero-main {
-    flex-direction: column;
+    flex-direction: column; /* Prvky pod sebou */
+    gap: 10px !important;  /* Minimální mezera mezi textem a fotkami */
+    align-items: center;
+  }
+
+  /* 2. Nadpis - oprava velikosti */
+.hero-title {
+    font-size: 40px !important;
+    line-height: 1.1;
+    margin-bottom: 20px !important; /* Zvýšeno z 5px pro lepší čitelnost */
+  }
+  
+  .hero-title span {
+    display: block;
+    font-size: 28px; /* "bolesti zad" o trochu větší pro efekt */
+  }
+
+  /* 3. Text a tlačítka */
+  .hero-text {
     text-align: center;
+    margin-bottom: 5px;
   }
 
-  .hero-text { text-align: center; }
-  .hero-btns { justify-content: center; }
+.hero-sub {
+    font-size: 0.9rem;
+    margin-bottom: 30px !important; /* Zvětšený prostor nad tlačítkem */
+    line-height: 1.6;
+  }
 
+.hero-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Mezera přímo mezi tlačítky, pokud by jich bylo víc */
+    align-items: center;
+    margin-bottom: 25px; /* Mezera pod tlačítky směrem k obrázkům */
+  }
+
+  /* 4. Obrázky - aby nebyly obrovské a nezavazely */
   .hero-images {
-    flex-direction: row;
+    display: flex;
+    flex-direction: row; /* Obrázky vedle sebe, aby šetřily místo na výšku */
+    gap: 10px;
     justify-content: center;
+    width: 100%;
   }
 
-  .hero-img-card { width: 180px; }
-  .hero-img-card img { height: 120px; }
+  .hero-img-card {
+    width: 140px; /* Zmenšeno, aby se vešly vedle sebe i na malý mobil */
+  }
+
+  .hero-img-card img {
+    height: 100px; /* Nižší fotky vytáhnou obsah nahoru */
+    object-fit: cover;
+  }
+
+  /* 5. Zbytek sekcí */
+  .sluzby-grid, .omne-grid, .contact-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .proc-card, .omne-card { 
+    position: static; 
+  }
 }
 
 @media (max-width: 768px) {

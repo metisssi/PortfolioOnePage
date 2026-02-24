@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Handle CORS preflight
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ cors.php [L]
+
+# Route API requests
+RewriteRule ^auth/login$ auth.php [L,QSA]
+RewriteRule ^content$ content.php [L,QSA]
+RewriteRule ^gallery$ gallery.php [L,QSA]
+RewriteRule ^gallery/(.+)$ gallery.php?id=$1 [L,QSA]
+RewriteRule ^reviews$ reviews.php [L,QSA]
+RewriteRule ^reviews/all$ reviews.php?action=all [L,QSA]
+RewriteRule ^reviews/(.+)/approve$ reviews.php?id=$1&action=approve [L,QSA]
+RewriteRule ^reviews/(.+)$ reviews.php?id=$1 [L,QSA]
+RewriteRule ^health$ health.php [L,QSA]
