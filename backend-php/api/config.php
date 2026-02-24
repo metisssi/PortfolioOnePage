@@ -8,7 +8,7 @@
 // For MongoDB Atlas:
 // define('MONGO_URI', 'mongodb+srv://username:password@cluster.xxxxx.mongodb.net/?retryWrites=true&w=majority');
 // For local MongoDB:
-define('MONGO_URI', 'mongodb+srv://prtfolio:A2007r2013@cluster0.yxtmtcv.mongodb.net/?prtfolio=Cluster0');
+define('MONGO_URI', 'mongodb+srv://prtfolio:A2007r2013@cluster0.yxtmtcv.mongodb.net/?retryWrites=true&w=majority');
 define('MONGO_DB', 'bolesti_zad');
 
 // --- AUTH ---
