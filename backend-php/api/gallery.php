@@ -10,9 +10,10 @@ if ($method === 'GET') {
 
     $result = array_map(function ($item) {
         return [
-            '_id'       => $item['_id'],
-            'url'       => $item['url'] ?? '',
-            'popis'     => $item['popis'] ?? '',
+            '_id' => $item['_id'],
+            'nadpis' => $item['nadpis'] ?? '',   // ADD
+            'url' => $item['url'] ?? '',
+            'popis' => $item['popis'] ?? '',
             'createdAt' => $item['createdAt'] ?? ''
         ];
     }, $items);
@@ -24,20 +25,23 @@ if ($method === 'GET') {
 if ($method === 'POST') {
     requireAuth();
     $body = getRequestBody();
-    $url   = trim($body['url'] ?? '');
+    $url = trim($body['url'] ?? '');
+    $nadpis = trim($body['nadpis'] ?? '');          // ADD
     $popis = trim($body['popis'] ?? '');
+
 
     if (!$url) {
         jsonResponse(['message' => 'URL je povinné'], 400);
     }
 
     $newId = mongoInsertOne('gallery', [
-        'url'       => $url,
-        'popis'     => $popis,
+        'url' => $url,
+        'nadpis' => $nadpis,
+        'popis' => $popis,
         'createdAt' => new MongoDB\BSON\UTCDateTime()
     ]);
 
-    jsonResponse(['_id' => $newId, 'url' => $url, 'popis' => $popis], 201);
+    jsonResponse(['_id' => $newId, 'url' => $url, 'nadpis' => $nadpis, 'popis' => $popis], 201);
 }
 
 // --- DELETE: admin ---
