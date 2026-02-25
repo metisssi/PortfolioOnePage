@@ -3,6 +3,11 @@ import { resolve } from 'path';
 
 export default defineConfig({
   appType: 'mpa',
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8000'
+    }
+  },
   build: {
     rollupOptions: {
       input: {
