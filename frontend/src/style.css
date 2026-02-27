@@ -572,40 +572,46 @@ body {
 }
 
 .gallery-item {
-  position: relative;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  aspect-ratio: 4/3;
   background: var(--dark2);
+  transition: border-color var(--transition), transform var(--transition);
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
-.gallery-item img {
+.gallery-item:hover {
+  border-color: rgba(192,57,43,0.3);
+  transform: translateY(-3px);
+}
+
+.gallery-img-wrap {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.gallery-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.gallery-item:hover img { transform: scale(1.06); }
+.gallery-item:hover .gallery-img-wrap img { transform: scale(1.06); }
 
-.gallery-caption {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 0.8rem;
-  /* Změna: tmavší pozadí pro lepší čitelnost, když je vidět pořád */
-  background: rgba(0, 0, 0, 0.7); 
+.gallery-nadpis {
+  padding: 0.6rem 0.8rem 0.3rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
-  /* Klíčová změna: odstranění transformace, aby popisek nebyl schovaný */
-  transform: translateY(0); 
-  transition: background var(--transition);
+  font-weight: 600;
+  color: #fff;
 }
 
-/* Pokud chcete, aby se při najetí myší pozadí popisku ještě trochu ztmavilo */
-.gallery-item:hover .gallery-caption {
-  background: rgba(0, 0, 0, 0.85);
+.gallery-popis {
+  padding: 0.3rem 0.8rem 0.6rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
 }
+
 .gallery-empty { text-align: center; color: var(--gray); padding: 4rem; grid-column: 1/-1; }
 
 /* ─── LIGHTBOX ─── */

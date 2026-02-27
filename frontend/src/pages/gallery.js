@@ -16,12 +16,14 @@ export async function loadGallery() {
 
     if (empty) empty.classList.add('hidden');
 
-    grid.innerHTML = items.map(item => `
-  <div class="gallery-item" data-url="${item.url}" data-popis="${item.popis || ''}">
-    <img src="${item.url}" alt="${item.nadpis || item.popis || 'Fotografie'}" loading="lazy"
-         onerror="this.src='https://placehold.co/400x300?text=Chyba'">
-    ${item.nadpis ? `<div class="gallery-caption gallery-caption--title">${item.nadpis}</div>` : ''}
-    ${item.popis ? `<div class="gallery-caption">${item.popis}</div>` : ''}
+grid.innerHTML = items.map(item => `
+  <div class="gallery-item" data-url="${item.url}" data-popis="${item.popis || ''}" data-nadpis="${item.nadpis || ''}">
+    ${item.nadpis ? `<div class="gallery-nadpis">${item.nadpis}</div>` : ''}
+    <div class="gallery-img-wrap">
+      <img src="${item.url}" alt="${item.nadpis || item.popis || 'Fotografie'}" loading="lazy"
+           onerror="this.src='https://placehold.co/400x300?text=Chyba'">
+    </div>
+    ${item.popis ? `<div class="gallery-popis">${item.popis}</div>` : ''}
   </div>
 `).join('');
 

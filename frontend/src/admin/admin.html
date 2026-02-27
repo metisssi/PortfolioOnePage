@@ -235,26 +235,24 @@
       <p class="note">ℹ️ Kontaktní údaje (telefon, email, adresa) se upravují přímo v souboru index.html</p>
     </div>
 
+    
     <!-- GALLERY -->
-    <!-- GALLERY -->
-    <div class="card">
-      <h2>🖼️ Galerie</h2>
-      <label>Nadpis fotky (volitelné)</label>
-      <input id="gallery-nadpis" placeholder="Nadpis fotky">
-      <label>URL obrázku</label>
-      <input id="gallery-url" placeholder="https://..." oninput="previewGalleryImage()">
-      <div id="gallery-preview" style="display:none; margin-bottom:0.75rem;">
-        <img id="gallery-preview-img" src="" alt="Náhled"
-          style="max-width:200px; max-height:150px; border-radius:8px; border:1px solid #333; object-fit:cover;">
-      </div>
-      <label>Nadpis</label>
-      <input id="gallery-nadpis" placeholder="Název fotky">
-      <label>Popis (volitelné)</label>
-      <input id="gallery-popis" placeholder="Popis fotky">
-      <button onclick="addPhoto()">Přidat foto</button>
-      <div id="gallery-msg" class="msg" style="display:none"></div>
-      <div class="gallery-list" id="gallery-list"></div>
-    </div>
+<div class="card">
+  <h2>🖼️ Galerie</h2>
+  <label>URL obrázku</label>
+  <input id="gallery-url" placeholder="https://..." oninput="previewGalleryImage()">
+  <div id="gallery-preview" style="display:none; margin-bottom:0.75rem;">
+    <img id="gallery-preview-img" src="" alt="Náhled"
+      style="max-width:200px; max-height:150px; border-radius:8px; border:1px solid #333; object-fit:cover;">
+  </div>
+  <label>Nadpis</label>
+  <input id="gallery-nadpis" placeholder="Název fotky">
+  <label>Popis (volitelné)</label>
+  <input id="gallery-popis" placeholder="Popis fotky">
+  <button onclick="addPhoto()">Přidat foto</button>
+  <div id="gallery-msg" class="msg" style="display:none"></div>
+  <div class="gallery-list" id="gallery-list"></div>
+</div>
 
     <!-- REVIEWS -->
     <div class="card">

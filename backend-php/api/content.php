@@ -20,21 +20,17 @@ if ($method === 'GET') {
 if ($method === 'PUT') {
     requireAuth();
     $body = getRequestBody();
-    $section = $body['section'] ?? '';
-    $data    = $body['data'] ?? null;
-
-    if (!$section || !$data) {
-        jsonResponse(['message' => 'Chybí section nebo data'], 400);
-    }
 
     $db = getDB();
-    $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-    // upsert
     $stmt = $db->prepare("INSERT INTO content (section_key, data)
                           VALUES (?, ?)
                           ON DUPLICATE KEY UPDATE data = VALUES(data)");
-    $stmt->execute([$section, $jsonData]);
+
+    foreach (['sluzby', 'proc_za_mnou', 'o_mne'] as $key) {
+        if (isset($body[$key])) {
+            $stmt->execute([$key, json_encode($body[$key], JSON_UNESCAPED_UNICODE)]);
+        }
+    }
 
     jsonResponse(['message' => 'Uloženo']);
 }
