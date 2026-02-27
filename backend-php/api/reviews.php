@@ -2,89 +2,92 @@
 require_once __DIR__ . '/config.php';
 
 $method = getMethod();
-$id = $_GET['id'] ?? null;
+$id     = $_GET['id'] ?? null;
 $action = $_GET['action'] ?? null;
 
-function formatReview(array $doc): array {
-    return [
-        '_id'       => $doc['_id'],
-        'jmeno'     => $doc['jmeno'] ?? '',
-        'prijmeni'  => $doc['prijmeni'] ?? '',
-        'email'     => $doc['email'] ?? '',
-        'text'      => $doc['text'] ?? '',
-        'approved'  => (bool)($doc['approved'] ?? false),
-        'createdAt' => $doc['createdAt'] ?? ''
-    ];
+// --- GET /reviews (public: only approved) ---
+if ($method === 'GET' && !$action) {
+    $db = getDB();
+    $rows = $db->query("SELECT id, jmeno, prijmeni, text, created_at FROM reviews WHERE approved = 1 ORDER BY created_at DESC")->fetchAll();
+
+    $result = array_map(function ($row) {
+        return [
+            '_id'       => (string)$row['id'],
+            'jmeno'     => $row['jmeno'],
+            'prijmeni'  => $row['prijmeni'],
+            'text'      => $row['text'],
+            'createdAt' => $row['created_at']
+        ];
+    }, $rows);
+
+    jsonResponse($result);
 }
 
-// --- GET /api/reviews (public - approved only) ---
-if ($method === 'GET' && $action === null) {
-    $items = mongoFind('reviews', ['approved' => true], ['sort' => ['createdAt' => -1]]);
-    jsonResponse(array_map('formatReview', $items));
-}
-
-// --- GET /api/reviews/all (admin) ---
+// --- GET /reviews/all (admin: all reviews) ---
 if ($method === 'GET' && $action === 'all') {
     requireAuth();
-    $items = mongoFind('reviews', [], ['sort' => ['createdAt' => -1]]);
-    jsonResponse(array_map('formatReview', $items));
+    $db = getDB();
+    $rows = $db->query("SELECT id, jmeno, prijmeni, email, text, approved, created_at FROM reviews ORDER BY created_at DESC")->fetchAll();
+
+    $result = array_map(function ($row) {
+        return [
+            '_id'       => (string)$row['id'],
+            'jmeno'     => $row['jmeno'],
+            'prijmeni'  => $row['prijmeni'],
+            'email'     => $row['email'],
+            'text'      => $row['text'],
+            'approved'  => (bool)$row['approved'],
+            'createdAt' => $row['created_at']
+        ];
+    }, $rows);
+
+    jsonResponse($result);
 }
 
-// --- POST /api/reviews (public) ---
-if ($method === 'POST' && !$id) {
+// --- POST /reviews (public: submit review) ---
+if ($method === 'POST') {
     $body = getRequestBody();
-    $jmeno    = trim($body['jmeno'] ?? '');
+    $jmeno   = trim($body['jmeno'] ?? '');
     $prijmeni = trim($body['prijmeni'] ?? '');
-    $email    = trim($body['email'] ?? '');
-    $text     = trim($body['text'] ?? '');
+    $email   = trim($body['email'] ?? '');
+    $text    = trim($body['text'] ?? '');
 
     if (!$jmeno || !$prijmeni || !$email || !$text) {
-        jsonResponse(['message' => 'Vyplňte všechna pole'], 400);
+        jsonResponse(['message' => 'Všechna pole jsou povinná'], 400);
     }
 
-    mongoInsertOne('reviews', [
-        'jmeno'     => $jmeno,
-        'prijmeni'  => $prijmeni,
-        'email'     => $email,
-        'text'      => $text,
-        'approved'  => false,
-        'createdAt' => new MongoDB\BSON\UTCDateTime()
-    ]);
+    $db = getDB();
+    $stmt = $db->prepare("INSERT INTO reviews (jmeno, prijmeni, email, text, approved) VALUES (?, ?, ?, ?, 0)");
+    $stmt->execute([$jmeno, $prijmeni, $email, $text]);
 
-    jsonResponse(['message' => 'Recenze přijata, čeká na schválení'], 201);
+    jsonResponse(['message' => 'Recenze odeslána ke schválení'], 201);
 }
 
-// --- PATCH /api/reviews/:id/approve (admin) ---
+// --- PATCH /reviews/:id/approve (admin) ---
 if ($method === 'PATCH' && $id && $action === 'approve') {
     requireAuth();
+    $db = getDB();
+    $stmt = $db->prepare("UPDATE reviews SET approved = 1 WHERE id = ?");
+    $stmt->execute([$id]);
 
-    try {
-        $oid = toObjectId($id);
-    } catch (Exception $e) {
-        jsonResponse(['message' => 'Neplatné ID'], 400);
-    }
-
-    $updated = mongoUpdateOne('reviews', ['_id' => $oid], ['$set' => ['approved' => true]]);
-
-    if ($updated === 0) {
+    if ($stmt->rowCount() === 0) {
         jsonResponse(['message' => 'Nenalezeno'], 404);
     }
 
-    $doc = mongoFindOne('reviews', ['_id' => $oid]);
-    jsonResponse(formatReview($doc));
+    jsonResponse(['message' => 'Schváleno']);
 }
 
-// --- DELETE /api/reviews/:id (admin) ---
+// --- DELETE /reviews/:id (admin) ---
 if ($method === 'DELETE' && $id) {
     requireAuth();
+    $db = getDB();
+    $stmt = $db->prepare("DELETE FROM reviews WHERE id = ?");
+    $stmt->execute([$id]);
 
-    try {
-        $oid = toObjectId($id);
-    } catch (Exception $e) {
-        jsonResponse(['message' => 'Neplatné ID'], 400);
+    if ($stmt->rowCount() === 0) {
+        jsonResponse(['message' => 'Nenalezeno'], 404);
     }
 
-    mongoDeleteOne('reviews', ['_id' => $oid]);
     jsonResponse(['message' => 'Smazáno']);
 }
 

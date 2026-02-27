@@ -5,53 +5,38 @@ $method = getMethod();
 
 // --- GET: public ---
 if ($method === 'GET') {
-    $doc = mongoFindOne('content');
+    $db = getDB();
+    $rows = $db->query("SELECT section_key, data FROM content")->fetchAll();
 
-    if (!$doc) {
-        jsonResponse([
-            'sluzby' => ['nadpis' => 'Léčba bolestí zad', 'text' => ''],
-            'proc_za_mnou' => ['nadpis' => 'Proč za mnou?', 'body' => []],
-            'o_mne' => ['nadpis' => 'O mně', 'text' => '', 'body' => [], 'foto' => '']
-        ]);
+    $result = [];
+    foreach ($rows as $row) {
+        $result[$row['section_key']] = json_decode($row['data'], true);
     }
 
-    jsonResponse([
-        'sluzby' => $doc['sluzby'] ?? ['nadpis' => '', 'text' => ''],
-        'proc_za_mnou' => $doc['proc_za_mnou'] ?? ['nadpis' => '', 'body' => []],
-        'o_mne' => $doc['o_mne'] ?? ['nadpis' => '', 'text' => '', 'body' => [], 'foto' => '']
-    ]);
+    jsonResponse($result);
 }
 
-// --- PUT: admin only ---
+// --- PUT: admin update section ---
 if ($method === 'PUT') {
     requireAuth();
     $body = getRequestBody();
+    $section = $body['section'] ?? '';
+    $data    = $body['data'] ?? null;
 
-    $update = [
-        'sluzby' => [
-            'nadpis' => $body['sluzby']['nadpis'] ?? '',
-            'text'   => $body['sluzby']['text'] ?? ''
-        ],
-        'proc_za_mnou' => [
-            'nadpis' => $body['proc_za_mnou']['nadpis'] ?? '',
-            'body'   => $body['proc_za_mnou']['body'] ?? []
-        ],
-        'o_mne' => [
-            'nadpis' => $body['o_mne']['nadpis'] ?? '',
-            'text'   => $body['o_mne']['text'] ?? '',
-            'body'   => $body['o_mne']['body'] ?? [],
-            'foto'   => $body['o_mne']['foto'] ?? ''
-        ]
-    ];
+    if (!$section || !$data) {
+        jsonResponse(['message' => 'Chybí section nebo data'], 400);
+    }
 
-    mongoUpdateOne('content', [], ['$set' => $update], true);
+    $db = getDB();
+    $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-    $doc = mongoFindOne('content');
-    jsonResponse([
-        'sluzby' => $doc['sluzby'],
-        'proc_za_mnou' => $doc['proc_za_mnou'],
-        'o_mne' => $doc['o_mne']
-    ]);
+    // upsert
+    $stmt = $db->prepare("INSERT INTO content (section_key, data)
+                          VALUES (?, ?)
+                          ON DUPLICATE KEY UPDATE data = VALUES(data)");
+    $stmt->execute([$section, $jsonData]);
+
+    jsonResponse(['message' => 'Uloženo']);
 }
 
 jsonResponse(['message' => 'Method not allowed'], 405);

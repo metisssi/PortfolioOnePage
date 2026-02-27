@@ -6,17 +6,18 @@ $id = $_GET['id'] ?? null;
 
 // --- GET: public ---
 if ($method === 'GET') {
-    $items = mongoFind('gallery', [], ['sort' => ['createdAt' => -1]]);
+    $db = getDB();
+    $rows = $db->query("SELECT id, url, nadpis, popis, created_at FROM gallery ORDER BY created_at DESC")->fetchAll();
 
-    $result = array_map(function ($item) {
+    $result = array_map(function ($row) {
         return [
-            '_id' => $item['_id'],
-            'nadpis' => $item['nadpis'] ?? '',   // ADD
-            'url' => $item['url'] ?? '',
-            'popis' => $item['popis'] ?? '',
-            'createdAt' => $item['createdAt'] ?? ''
+            '_id'       => (string)$row['id'],
+            'url'       => $row['url'],
+            'nadpis'    => $row['nadpis'] ?? '',
+            'popis'     => $row['popis'] ?? '',
+            'createdAt' => $row['created_at']
         ];
-    }, $items);
+    }, $rows);
 
     jsonResponse($result);
 }
@@ -25,36 +26,31 @@ if ($method === 'GET') {
 if ($method === 'POST') {
     requireAuth();
     $body = getRequestBody();
-    $url = trim($body['url'] ?? '');
-    $nadpis = trim($body['nadpis'] ?? '');          // ADD
-    $popis = trim($body['popis'] ?? '');
-
+    $url    = trim($body['url'] ?? '');
+    $nadpis = trim($body['nadpis'] ?? '');
+    $popis  = trim($body['popis'] ?? '');
 
     if (!$url) {
         jsonResponse(['message' => 'URL je povinné'], 400);
     }
 
-    $newId = mongoInsertOne('gallery', [
-        'url' => $url,
-        'nadpis' => $nadpis,
-        'popis' => $popis,
-        'createdAt' => new MongoDB\BSON\UTCDateTime()
-    ]);
+    $db = getDB();
+    $stmt = $db->prepare("INSERT INTO gallery (url, nadpis, popis) VALUES (?, ?, ?)");
+    $stmt->execute([$url, $nadpis, $popis]);
+    $newId = $db->lastInsertId();
 
-    jsonResponse(['_id' => $newId, 'url' => $url, 'nadpis' => $nadpis, 'popis' => $popis], 201);
+    jsonResponse(['_id' => (string)$newId, 'url' => $url, 'nadpis' => $nadpis, 'popis' => $popis], 201);
 }
 
 // --- DELETE: admin ---
 if ($method === 'DELETE' && $id) {
     requireAuth();
 
-    try {
-        $deleted = mongoDeleteOne('gallery', ['_id' => toObjectId($id)]);
-    } catch (Exception $e) {
-        jsonResponse(['message' => 'Neplatné ID'], 400);
-    }
+    $db = getDB();
+    $stmt = $db->prepare("DELETE FROM gallery WHERE id = ?");
+    $stmt->execute([$id]);
 
-    if ($deleted === 0) {
+    if ($stmt->rowCount() === 0) {
         jsonResponse(['message' => 'Nenalezeno'], 404);
     }
 

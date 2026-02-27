@@ -1,14 +1,18 @@
 RewriteEngine On
 
-# If the request is for the api directory, let it through
-RewriteRule ^api/ - [L]
+# --- API routes ---
+RewriteRule ^api/auth/login$        api/auth.php [L,QSA]
+RewriteRule ^api/content$           api/content.php [L,QSA]
+RewriteRule ^api/gallery$           api/gallery.php [L,QSA]
+RewriteRule ^api/gallery/(.+)$      api/gallery.php?id=$1 [L,QSA]
+RewriteRule ^api/reviews$           api/reviews.php [L,QSA]
+RewriteRule ^api/reviews/all$       api/reviews.php?action=all [L,QSA]
+RewriteRule ^api/reviews/(.+)/approve$ api/reviews.php?id=$1&action=approve [L,QSA]
+RewriteRule ^api/reviews/(.+)$      api/reviews.php?id=$1 [L,QSA]
+RewriteRule ^api/health$            api/health.php [L,QSA]
+RewriteRule ^api/install$           api/install.php [L,QSA]
 
-# Serve frontend files directly if they exist
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# Otherwise serve index.html (for SPA)
-RewriteRule ^ index.html [L]
+# --- SPA fallback (frontend) ---
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(?!api/) index.html [L]
