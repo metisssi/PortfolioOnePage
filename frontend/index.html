@@ -3,7 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Léčba bolestí zad</title>
+  <title>Léčba bolestí zad — bez operace, bez léků | Jíloviště</title>
+
+  <!-- Základní SEO -->
+  <meta name="description" content="Trápí vás bolesti zad? Nabízím léčbu výhřezů plotének, skoliózy a bolestí páteře bez operace a bez léků. 25 let zkušeností, 98 % úspěšnost. Jíloviště u Prahy.">
+  <meta name="keywords" content="léčba bolestí zad, výhřez ploténky, bolesti páteře, skolióza, Bechtěrevova nemoc, léčba bez operace, Jíloviště, Praha">
+  <meta name="author" content="Olena Grynko">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bolesti-zad-lecba.cz">
+
+  <!-- Open Graph (Facebook, WhatsApp, Messenger) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bolesti-zad-lecba.cz">
+  <meta property="og:title" content="Léčba bolestí zad — bez operace, bez léků">
+  <meta property="og:description" content="Trápí vás bolesti zad? Naše metoda pomůže i tam, kde jiní neuspěli. Bezoperační způsob léčby. 25 let zkušeností.">
+  <meta property="og:image" content="https://bolesti-zad-lecba.cz/assets/hero-bg.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:site_name" content="Léčba bolestí zad">
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Léčba bolestí zad — bez operace, bez léků">
+  <meta name="twitter:description" content="Trápí vás bolesti zad? Naše metoda pomůže i tam, kde jiní neuspěli. 25 let zkušeností.">
+  <meta name="twitter:image" content="https://bolesti-zad-lecba.cz/assets/hero-bg.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="src/style.css">
@@ -12,130 +38,130 @@
 
 <!-- NAVBAR -->
 <nav id="navbar">
-  <div class="nav-logo">LÉČBA</div>
+  <div class="nav-logo">LECBA</div>
   <div class="nav-links">
-    <button class="nav-btn active" data-section="hero">Domů</button>
-    <button class="nav-btn" data-section="sluzby">Služby</button>
-    <button class="nav-btn" data-section="o-mne">O mně</button>
+    <button class="nav-btn active" data-section="hero">Domu</button>
+    <button class="nav-btn" data-section="sluzby">Sluzby</button>
+    <button class="nav-btn" data-section="o-mne">O mne</button>
     <button class="nav-btn" data-section="gallery">Galerie</button>
     <button class="nav-btn" data-section="reviews">Recenze</button>
     <button class="nav-btn" data-section="contact">Kontakt</button>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="cs" title="Cestina">
+      <img src="https://flagcdn.com/w40/cz.png" alt="CZ" width="24" height="16">
+    </button>
+    <button class="lang-btn" data-lang="en" title="English">
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="24" height="16">
+    </button>
   </div>
   <button class="nav-hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section id="hero" class="section visible">
   <div class="hero-bg" style="background-image: url('assets/hero-bg.jpg')"></div>
   <div class="hero-overlay"></div>
-
   <div class="hero-particles">
     <div class="particle p1"></div>
     <div class="particle p2"></div>
     <div class="particle p3"></div>
   </div>
-
   <div class="hero-content">
     <div class="hero-main">
-      <!-- Left: text -->
       <div class="hero-text">
-        <h1 class="hero-title">Zbavíme vás<span>bolesti zad</span></h1>
-        <p class="hero-sub">Trápí vás bolesti? Naše metoda pomůže i tam, kde jiní neuspěli.<br>Bez operace. Bez léků. S výsledky.</p>
+        <h1 class="hero-title">
+          <span data-i18n="hero_title_1">Zbavime vas</span>
+          <span data-i18n="hero_title_2">bolesti zad</span>
+        </h1>
+        <p class="hero-sub" data-i18n="hero_sub">Trapi vas bolesti? Nase metoda pomuze i tam, kde jini neuspeli. Bez operace. Bez leku. S vysledky.</p>
         <div class="hero-btns">
-          <a class="btn-primary big pulse" href="tel:+420775107943">Zavolat — konzultace zdarma</a>
+          <a class="btn-primary big pulse" href="tel:+420775107943" data-i18n="hero_btn">Zavolat - konzultace zdarma</a>
         </div>
       </div>
-
-      <!-- Right: small preview images -->
       <div class="hero-images">
         <div class="hero-img-card">
-          <img src="assets/mainpicture1.JPG" alt="Bolesti zad — ukázka problému">
-          <div class="hero-img-label">Trápí vás záda?</div>
+          <img src="assets/mainpicture1.JPG" alt="Bolesti zad">
+          <div class="hero-img-label" data-i18n="hero_img1">Trapi vas zada?</div>
         </div>
         <div class="hero-img-card">
-          <img src="assets/mainpicture2.JPG" alt="Léčba — výsledek terapie">
-          <div class="hero-img-label">Pomůžeme vám.</div>
+          <img src="assets/mainpicture2.JPG" alt="Lecba zad">
+          <div class="hero-img-label" data-i18n="hero_img2">Pomuzeme vam.</div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="hero-scroll"><span></span></div>
 </section>
 
-<!-- ═══ SLUŽBY ═══ -->
+<!-- SLUZBY -->
 <section id="sluzby" class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-tag">Co léčím</div>
-      <h2 class="section-title" id="sluzby-nadpis">Léčba bolestí zad</h2>
+      <div class="section-tag" data-i18n="tag_services">Co lecim</div>
+      <h2 class="section-title" id="sluzby-nadpis">Lecba bolesti zad</h2>
     </div>
     <div class="sluzby-grid">
       <div>
-        <p class="sluzby-intro">
-          Nabízím léčení bolestí zad včetně onemocnění páteře. Každý případ je
-          individuální a přistupuji ke každému pacientovi s maximální péčí.
-        </p>
+        <p class="sluzby-intro" data-i18n="sluzby_intro">Nabizim leceni bolesti zad vcetne onemocneni patere.</p>
         <div class="sluzby-list" id="sluzby-list"></div>
       </div>
       <div class="proc-card">
-        <h3 id="proc-nadpis">Proč za mnou?</h3>
+        <h3 id="proc-nadpis">Proc za mnou?</h3>
         <ul class="proc-list" id="proc-list"></ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ O MNĚ ═══ -->
+<!-- O MNE -->
 <section id="o-mne" class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-tag">Kdo jsem</div>
-      <h2 class="section-title" id="omne-nadpis">O mně</h2>
+      <div class="section-tag" data-i18n="tag_about">Kdo jsem</div>
+      <h2 class="section-title" id="omne-nadpis">O mne</h2>
     </div>
     <div class="omne-grid">
       <div>
         <p class="omne-intro" id="omne-text"></p>
         <ul class="omne-list" id="omne-list"></ul>
       </div>
-
       <div class="omne-card">
-        <div class="omne-image-container" style="margin-bottom: 2rem;">
-          <img src="/assets/onwpicture.jpg" alt="Moje Fotografie" 
-               style="width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="omne-image-container" style="margin-bottom:2rem;">
+          <img src="/assets/onwpicture.jpg" alt="Fotografie"
+               style="width:100%;border-radius:12px;border:1px solid rgba(255,255,255,0.1);">
         </div>
-
         <div class="omne-stat">
           <span class="omne-num">25+</span>
-          <span class="omne-label">Let zkušeností</span>
+          <span class="omne-label" data-i18n="stat_years">Let zkusenosti</span>
         </div>
         <div class="omne-divider"></div>
         <div class="omne-stat">
           <span class="omne-num">1000+</span>
-          <span class="omne-label">Spokojených pacientů</span>
+          <span class="omne-label" data-i18n="stat_patients">Spokojenych pacientu</span>
         </div>
         <div class="omne-divider"></div>
         <div class="omne-stat">
           <span class="omne-num">98%</span>
-          <span class="omne-label">Úspěšnost léčby</span>
+          <span class="omne-label" data-i18n="stat_success">Uspesnost lecby</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ GALERIE ═══ -->
+<!-- GALERIE -->
 <section id="gallery" class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-tag">Naše prostory</div>
-      <h2 class="section-title">Galerie</h2>
+      <div class="section-tag" data-i18n="tag_gallery">Nase prostory</div>
+      <h2 class="section-title" data-i18n="title_gallery">Galerie</h2>
     </div>
     <div class="gallery-grid" id="gallery-grid"></div>
     <div class="gallery-empty hidden" id="gallery-empty">
-      <p>Galerie je zatím prázdná.</p>
+      <p data-i18n="gallery_empty">Galerie je zatim prazdna.</p>
     </div>
   </div>
 </section>
@@ -144,98 +170,123 @@
 <div class="lightbox hidden" id="lightbox">
   <div class="lightbox-overlay" id="lightbox-close"></div>
   <div class="lightbox-content">
-    <button class="lightbox-close-btn" id="lightbox-close-btn">✕</button>
+    <button class="lightbox-close-btn" id="lightbox-close-btn">X</button>
     <img id="lightbox-img" src="" alt="">
     <p id="lightbox-popis"></p>
   </div>
 </div>
 
-<!-- ═══ RECENZE ═══ -->
+<!-- RECENZE -->
 <section id="reviews" class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-tag">Co říkají pacienti</div>
-      <h2 class="section-title">Recenze</h2>
+      <div class="section-tag" data-i18n="tag_reviews">Co rikaji pacienti</div>
+      <h2 class="section-title" data-i18n="title_reviews">Recenze</h2>
     </div>
     <div class="reviews-grid" id="reviews-grid"></div>
-
     <div class="review-form-wrap">
-      <h3>Napište recenzi</h3>
+      <h3 data-i18n="review_form_title">Napiste recenzi</h3>
       <form class="review-form" id="review-form">
         <div class="form-row">
-          <input name="jmeno" placeholder="Jméno" required>
-          <input name="prijmeni" placeholder="Příjmení" required>
+          <input name="jmeno" data-i18n-placeholder="review_name" placeholder="Jmeno" required>
+          <input name="prijmeni" data-i18n-placeholder="review_surname" placeholder="Prijmeni" required>
         </div>
-        <input name="email" type="email" placeholder="E-mail" required>
-        <textarea name="text" rows="4" placeholder="Vaše zkušenost..." required></textarea>
-        <button type="submit" class="btn-primary">Odeslat recenzi</button>
+        <input name="email" type="email" data-i18n-placeholder="review_email" placeholder="E-mail" required>
+        <textarea name="text" rows="4" data-i18n-placeholder="review_text" placeholder="Vase zkusenost..." required></textarea>
+        <button type="submit" class="btn-primary" data-i18n="review_submit">Odeslat recenzi</button>
         <div class="form-msg hidden" id="review-msg"></div>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ═══ KONTAKT (hardcoded — no MongoDB) ═══ -->
+<!-- KONTAKT -->
 <section id="contact" class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-tag">Spojte se s námi</div>
-      <h2 class="section-title">Kontakt</h2>
+      <div class="section-tag" data-i18n="tag_contact">Spojte se s nami</div>
+      <h2 class="section-title" data-i18n="title_contact">Kontakt</h2>
     </div>
     <div class="contact-grid">
       <div class="contact-info">
-
         <div class="contact-item">
-          <div class="contact-icon">📞</div>
+          <div class="contact-icon">&#128222;</div>
           <div>
-            <div class="contact-label">Telefon</div>
+            <div class="contact-label" data-i18n="contact_phone_label">Telefon</div>
             <a class="contact-value" href="tel:+420775107943">+420 775 107 943</a>
           </div>
         </div>
-
         <div class="contact-item">
-          <div class="contact-icon">✉️</div>
+          <div class="contact-icon">&#9993;</div>
           <div>
-            <div class="contact-label">E-mail</div>
+            <div class="contact-label" data-i18n="contact_email_label">E-mail</div>
             <a class="contact-value" href="mailto:olenagrynko@seznam.cz">olenagrynko@seznam.cz</a>
           </div>
         </div>
-
         <div class="contact-item">
-          <div class="contact-icon">📍</div>
+          <div class="contact-icon">&#128205;</div>
           <div>
-            <div class="contact-label">Adresa</div>
-            <a class="contact-value" 
-               href="https://www.google.com/maps/search/?api=1&query=Všenorská+60,+252+02+Jíloviště" 
-               target="_blank">
-               Všenorská 60,<br>252 02 Jíloviště
-            </a>
+            <div class="contact-label" data-i18n="contact_address_label">Adresa</div>
+            <a class="contact-value"
+               href="https://www.google.com/maps/search/?api=1&query=Vsenorska+60,+252+02+Jiloviste"
+               target="_blank">Vsenorska 60,<br>252 02 Jiloviste</a>
           </div>
         </div>
-
         <div class="contact-cta">
-          <a class="btn-primary big pulse" href="tel:+420775107943">Zavolat nyní</a>
+          <a class="btn-primary big pulse" href="tel:+420775107943" data-i18n="contact_cta">Zavolat nyni</a>
         </div>
-
       </div>
       <div class="contact-map">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2566.273187212457!2d14.33042337685651!3d49.92402665481352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b99675bd9a749%3A0xe1d4f88ee5545b4d!2zVsWhZW5vcnNrw6EgNjAsIDI1MiAwMiBKw6lsb3Zpxジ琺!5e0!3m2!1scs!2scz!4v1700000000000!5m2!1scs!2scz" 
-          width="100%" 
-          height="420" 
-          style="border:0; border-radius: 16px;" 
-          allowfullscreen="" 
-          loading="lazy" 
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2566.273187212457!2d14.33042337685651!3d49.92402665481352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b99675bd9a749%3A0xe1d4f88ee5545b4d!2m2!1scs!2scz"
+          width="100%" height="420"
+          style="border:0;border-radius:16px;"
+          allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
     </div>
   </div>
 </section>
+
 <!-- FOOTER -->
 <footer id="footer">
-  <p>&copy; 2025 Léčba bolestí zad. Všechna práva vyhrazena.</p>
+  <p data-i18n="footer">2025 Lecba bolesti zad. Vsechna prava vyhrazena.</p>
 </footer>
+
+<!-- Schema.org strukturovana data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Lecba bolesti zad - Olena Grynko",
+  "description": "Lecba bolesti zad, vyhrezu plotenek, skoliozy a onemocneni patere bez operace a bez leku.",
+  "url": "https://bolesti-zad-lecba.cz",
+  "telephone": "+420775107943",
+  "email": "olenagrynko@seznam.cz",
+  "image": "https://bolesti-zad-lecba.cz/assets/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Vsenorska 60",
+    "addressLocality": "Jiloviste",
+    "postalCode": "252 02",
+    "addressCountry": "CZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 49.924,
+    "longitude": 14.330
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "medicalSpecialty": "PhysicalTherapy",
+  "priceRange": "$$"
+}
+</script>
 
 <script type="module" src="src/main.js"></script>
 </body>

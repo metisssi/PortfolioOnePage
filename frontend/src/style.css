@@ -806,82 +806,95 @@ a.contact-value:hover { color: var(--red); }
 
 .hidden { display: none !important; }
 
-/* ─── RESPONSIVE ─── */
+/* ================================================================
+   PASTE THIS to replace everything from  @media (max-width: 900px)
+   down to the end of the responsive section in style.css
+   ================================================================ */
+
+/* ─── TABLET (900px) ─── */
 @media (max-width: 900px) {
-  /* 1. Hlavní kontejner - méně místa nahoře */
   .hero-content {
-    padding-top: 50px !important; /* Prostor pro fixní menu */
+    padding-top: 50px !important;
     padding-bottom: 20px;
   }
 
   .hero-main {
-    flex-direction: column; /* Prvky pod sebou */
-    gap: 10px !important;  /* Minimální mezera mezi textem a fotkami */
+    flex-direction: column;
+    gap: 10px !important;
     align-items: center;
   }
 
-  /* 2. Nadpis - oprava velikosti */
-.hero-title {
+  .hero-title {
     font-size: 40px !important;
     line-height: 1.1;
-    margin-bottom: 20px !important; /* Zvýšeno z 5px pro lepší čitelnost */
-  }
-  
-  .hero-title span {
-    display: block;
-    font-size: 28px; /* "bolesti zad" o trochu větší pro efekt */
+    margin-bottom: 20px !important;
   }
 
-  /* 3. Text a tlačítka */
+  .hero-title span {
+    display: block;
+    font-size: 28px;
+  }
+
   .hero-text {
     text-align: center;
     margin-bottom: 5px;
   }
 
-.hero-sub {
+  .hero-sub {
     font-size: 0.9rem;
-    margin-bottom: 30px !important; /* Zvětšený prostor nad tlačítkem */
+    margin-bottom: 30px !important;
     line-height: 1.6;
   }
 
-.hero-btns {
+  .hero-btns {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Mezera přímo mezi tlačítky, pokud by jich bylo víc */
+    gap: 15px;
     align-items: center;
-    margin-bottom: 25px; /* Mezera pod tlačítky směrem k obrázkům */
+    margin-bottom: 25px;
   }
 
-  /* 4. Obrázky - aby nebyly obrovské a nezavazely */
   .hero-images {
     display: flex;
-    flex-direction: row; /* Obrázky vedle sebe, aby šetřily místo na výšku */
+    flex-direction: row;
     gap: 10px;
     justify-content: center;
     width: 100%;
   }
 
-  .hero-img-card {
-    width: 140px; /* Zmenšeno, aby se vešly vedle sebe i na malý mobil */
+  .hero-img-card { width: 140px; }
+  .hero-img-card img { height: 100px; object-fit: cover; }
+
+  .sluzby-grid, .omne-grid, .contact-grid {
+    grid-template-columns: 1fr;
   }
 
-  .hero-img-card img {
-    height: 100px; /* Nižší fotky vytáhnou obsah nahoru */
-    object-fit: cover;
-  }
-
-  /* 5. Zbytek sekcí */
-  .sluzby-grid, .omne-grid, .contact-grid { 
-    grid-template-columns: 1fr; 
-  }
-  .proc-card, .omne-card { 
-    position: static; 
+  .proc-card, .omne-card {
+    position: static;
   }
 }
 
+/* ─── MOBILE NAVBAR (768px) ─── */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
+
+  /* Navbar layout: logo | [spacer] | lang | hamburger */
+  #navbar {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .nav-logo {
+    grid-column: 1;
+  }
+
+  /* Hide nav links — shown via hamburger */
+  .nav-links {
+    display: none;
+    grid-column: 1 / -1; /* full width when open */
+  }
 
   .nav-links.open {
     display: flex;
@@ -896,16 +909,125 @@ a.contact-value:hover { color: var(--red); }
     z-index: 999;
   }
 
+  /* Lang switcher sits left of hamburger */
+  .lang-switcher {
+    grid-column: 3;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 0.1rem;
+  }
+
+  .lang-btn {
+    font-size: 1.4rem;        /* big enough to tap easily */
+    padding: 0.4rem 0.35rem;  /* larger touch target */
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hamburger sits last */
+  .nav-hamburger {
+    grid-column: 4;
+    display: flex;
+  }
+
+  /* Section padding */
   .form-row { grid-template-columns: 1fr; }
   .section-inner { padding: calc(var(--nav-h) + 3rem) 1.5rem 3rem; }
   .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
-
   .hero-images { flex-direction: column; align-items: center; }
   .hero-img-card { width: 200px; }
 }
 
+/* ─── SMALL MOBILE (480px) ─── */
 @media (max-width: 480px) {
+  #navbar {
+    padding: 0 0.75rem;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+  }
+
+  .lang-btn {
+    font-size: 1.25rem;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0.3rem 0.25rem;
+  }
+
   .hero-img-card { width: 160px; }
   .hero-img-card img { height: 100px; }
   .hero-img-label { font-size: 0.75rem; padding: 0.5rem 0.7rem; }
+
+  /* Stack contact grid */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Smaller section titles */
+  .section-title {
+    font-size: clamp(1.6rem, 8vw, 2.5rem);
+  }
+
+  /* Review form full width */
+  .review-form-wrap {
+    padding-top: 2rem;
+  }
+}
+
+/* ─── LANGUAGE SWITCHER — replace the old .lang-switcher block in style.css ─── */
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.lang-sep { display: none; } /* hide the | separator */
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 0.3rem 0.4rem;
+  cursor: pointer;
+  line-height: 1;
+  border-radius: 6px;
+  opacity: 0.35;
+  transition: opacity 0.2s, transform 0.2s;
+  filter: grayscale(40%);
+  display: flex;
+  align-items: center;
+}
+
+.lang-btn img {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+
+.lang-btn:hover {
+  opacity: 0.75;
+  transform: scale(1.1);
+  filter: grayscale(0%);
+}
+
+.lang-btn.active {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.15);
+}
+
+@media (max-width: 768px) {
+  .lang-switcher {
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
+  .lang-btn { font-size: 1.25rem; }
 }

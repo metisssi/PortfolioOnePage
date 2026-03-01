@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Zakazat admin panel pro roboty
+Disallow: /admin.html
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://bolesti-zad-lecba.cz/sitemap.xml

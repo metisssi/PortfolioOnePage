@@ -1,4 +1,5 @@
 import { API } from '../utils/config.js';
+import { t } from '../utils/i18n.js';
 
 export async function loadReviews() {
   try {
@@ -8,9 +9,7 @@ export async function loadReviews() {
     if (!grid) return;
 
     if (!items.length) {
-      grid.innerHTML = `<p style="color:var(--gray);grid-column:1/-1;padding:2rem 0">
-        Zatím žádné schválené recenze. Buďte první!
-      </p>`;
+      grid.innerHTML = `<p style="color:var(--gray);grid-column:1/-1;padding:2rem 0">${t('reviews_empty')}</p>`;
       return;
     }
 
@@ -43,18 +42,17 @@ export function initReviewForm() {
           text:     form.text.value
         })
       });
-      const result = await res.json();
       if (msg) {
         msg.classList.remove('hidden', 'error');
         msg.classList.add('success');
-        msg.textContent = result.message;
+        msg.textContent = t('review_success');
       }
       form.reset();
     } catch {
       if (msg) {
         msg.classList.remove('hidden');
         msg.classList.add('error');
-        msg.textContent = 'Chyba při odesílání. Zkuste to znovu.';
+        msg.textContent = t('review_error');
       }
     }
   });

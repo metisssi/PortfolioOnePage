@@ -6,12 +6,12 @@
 
 // --- MYSQL ---
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'bolesti_zad');        // ← имя БД (создай в панели хостинга)
-define('DB_USER', 'root');               // ← пользователь БД
-define('DB_PASS', '');                   // ← пароль БД
+define('DB_NAME', 'olenadb');        // ← имя БД (создай в панели хостинга)
+define('DB_USER', 'olena');               // ← пользователь БД
+define('DB_PASS', 'uV1={6@!</m+iN/2M#ks');                   // ← пароль БД
 
 // --- AUTH ---
-define('ADMIN_PASSWORD', '123456');
+define('ADMIN_PASSWORD', 'Grynko-1515');
 define('JWT_SECRET', 'your_jwt_secret_key_change_me_123!');
 
 // --- CORS ---

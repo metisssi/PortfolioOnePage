@@ -1,4 +1,5 @@
 import { API } from '../utils/config.js';
+import { getLang } from '../utils/i18n.js';
 
 let contentCache = null;
 
@@ -9,20 +10,45 @@ async function fetchContent() {
   return contentCache;
 }
 
+// Call this to clear cache & re-render when language changes
+export function clearContentCache() {
+  contentCache = null;
+}
+
+/**
+ * Pick the right language version from a section.
+ * New format:  { cs: { nadpis, text, body }, en: { nadpis, text, body } }
+ * Old format (fallback): { nadpis, text, body }  — treated as Czech
+ */
+function pick(section) {
+  if (!section) return {};
+  const lang = getLang();
+  // New bilingual format
+  if (section.cs || section.en) {
+    return section[lang] ?? section.cs ?? {};
+  }
+  // Legacy format — just return as-is
+  return section;
+}
+
 export async function loadSluzby() {
   try {
     const data = await fetchContent();
 
     // --- SLUZBY section ---
+    const sluzby = pick(data.sluzby);
+    const proc   = pick(data.proc_za_mnou);
+    const omne   = pick(data.o_mne);
+
     const nadpisEl = document.getElementById('sluzby-nadpis');
-    if (nadpisEl) nadpisEl.textContent = data.sluzby?.nadpis || 'Léčba bolestí zad';
+    if (nadpisEl) nadpisEl.textContent = sluzby.nadpis || 'Léčba bolestí zad';
 
     const procNadpisEl = document.getElementById('proc-nadpis');
-    if (procNadpisEl) procNadpisEl.textContent = data.proc_za_mnou?.nadpis || 'Proč za mnou?';
+    if (procNadpisEl) procNadpisEl.textContent = proc.nadpis || 'Proč za mnou?';
 
     const sluzbyList = document.getElementById('sluzby-list');
     if (sluzbyList) {
-      const lines = (data.sluzby?.text || '').split('\n').filter(l => l.trim());
+      const lines = (sluzby.text || '').split('\n').filter(l => l.trim());
       sluzbyList.innerHTML = lines.map(line => {
         const clean = line.replace(/^\d+\.\s*/, '');
         return `<div class="sluzby-item">${clean}</div>`;
@@ -31,31 +57,29 @@ export async function loadSluzby() {
 
     const procList = document.getElementById('proc-list');
     if (procList) {
-      procList.innerHTML = (data.proc_za_mnou?.body || [])
-        .map(item => `<li>${item}</li>`).join('');
+      procList.innerHTML = (proc.body || []).map(item => `<li>${item}</li>`).join('');
     }
 
     // --- O MNE section ---
     const omneNadpisEl = document.getElementById('omne-nadpis');
-    if (omneNadpisEl) omneNadpisEl.textContent = data.o_mne?.nadpis || 'O mně';
+    if (omneNadpisEl) omneNadpisEl.textContent = omne.nadpis || 'O mně';
 
     const omneTextEl = document.getElementById('omne-text');
-    if (omneTextEl) omneTextEl.textContent = data.o_mne?.text || '';
+    if (omneTextEl) omneTextEl.textContent = omne.text || '';
 
     const omneList = document.getElementById('omne-list');
     if (omneList) {
-      omneList.innerHTML = (data.o_mne?.body || [])
-        .map(item => `<li>${item}</li>`).join('');
+      omneList.innerHTML = (omne.body || []).map(item => `<li>${item}</li>`).join('');
     }
 
     // --- O MNE foto ---
-    const omneImg = document.getElementById('omne-foto');
+    const omneImg    = document.getElementById('omne-foto');
     const omneImgWrap = document.getElementById('omne-foto-wrap');
-    if (omneImg && data.o_mne?.foto) {
-      omneImg.src = data.o_mne.foto;
-      omneImg.alt = data.o_mne?.nadpis || 'O mně';
+    if (omneImg && omne.foto) {
+      omneImg.src = omne.foto;
+      omneImg.alt = omne.nadpis || 'O mně';
       if (omneImgWrap) omneImgWrap.style.display = 'block';
-    } else if (omneImgWrap && !data.o_mne?.foto) {
+    } else if (omneImgWrap && !omne.foto) {
       omneImgWrap.style.display = 'none';
     }
 
