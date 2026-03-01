@@ -41,6 +41,7 @@ export const translations = {
     review_submit: 'Odeslat recenzi',
     review_success: 'Recenze odeslána ke schválení',
     review_error: 'Chyba při odesílání. Zkuste to znovu.',
+    ext_reviews_title: 'Další recenze najdete zde',
 
     contact_phone_label: 'Telefon',
     contact_email_label: 'E-mail',
@@ -92,6 +93,7 @@ export const translations = {
     review_submit: 'Submit review',
     review_success: 'Review submitted for approval',
     review_error: 'Error submitting. Please try again.',
+    ext_reviews_title: 'More reviews can be found here',
 
     contact_phone_label: 'Phone',
     contact_email_label: 'E-mail',

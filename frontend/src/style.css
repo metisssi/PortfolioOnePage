@@ -26,6 +26,92 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── EXTERNAL REVIEWS ─── */
+.ext-reviews {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.ext-reviews-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gray);
+  margin-bottom: 1.25rem;
+}
+
+.ext-reviews-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ext-review-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.ext-review-card:hover {
+  border-color: rgba(192,57,43,0.4);
+  transform: translateX(4px);
+}
+
+.ext-review-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.4rem;
+}
+
+.ext-review-icon.google {
+  background: #fff;
+}
+
+.ext-review-icon.forum {
+  background: rgba(192,57,43,0.15);
+}
+
+.ext-review-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ext-review-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.ext-review-desc {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+}
+
+.ext-review-arrow {
+  color: var(--red);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.ext-review-card:hover .ext-review-arrow {
+  transform: translateX(4px);
+}
+
 /* ─── NAVBAR ─── */
 #navbar {
   position: fixed;
